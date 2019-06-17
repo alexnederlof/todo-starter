@@ -1,4 +1,4 @@
-schema: "../server/src/schema.ts"
+schema: "https://<APP NAME>.herokuapp.com/v1/graphql"
 documents: "**/*.graphql"
 generates:
   src/generated/graphql.tsx:

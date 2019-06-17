@@ -1,7 +1,9 @@
 mutation CreateTodo($name: String!) {
-  createTodo(name: $name) {
-    id
-    name
-    complete
+  insert_todos(objects: { name: $name }) {
+    returning {
+      name
+      id
+      complete
+    }
   }
 }

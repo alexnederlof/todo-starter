@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
-  Todo as TodoType,
+  Todos,
   UpdateTodoComponent,
   TodosQuery,
   TodosQueryVariables,
@@ -26,16 +26,16 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  todo: TodoType;
+  todo: Todos;
 }
 
 const Todo = ({ classes, todo }: Props) => (
   <UpdateTodoComponent
     update={(cache, { data }) => {
-      if (!data) {
+      if (!data || !data.update_todos) {
         return;
       }
-      const updateTodo = data.updateTodo;
+      const updateTodo = data.update_todos.returning[0];
       const query = cache.readQuery<TodosQuery, TodosQueryVariables>({
         query: TodosDocument
       });
@@ -70,10 +70,10 @@ const Todo = ({ classes, todo }: Props) => (
         <ListItemSecondaryAction>
           <DestroyTodoComponent
             update={(cache, { data }) => {
-              if (!data) {
+              if (!data || !data.delete_todos) {
                 return;
               }
-              const destroyTodo = data.destroyTodo;
+              const destroyTodo = data.delete_todos.returning[0];
               const query = cache.readQuery<TodosQuery, TodosQueryVariables>({
                 query: TodosDocument
               });

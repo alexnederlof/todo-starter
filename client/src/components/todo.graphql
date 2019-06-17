@@ -1,13 +1,17 @@
 mutation UpdateTodo($id: Int!, $complete: Boolean!) {
-  updateTodo(id: $id, complete: $complete) {
-    id
-    name
-    complete
+  update_todos(where: { id: { _eq: $id } }, _set: { complete: $complete }) {
+    returning {
+      complete
+      id
+      name
+    }
   }
 }
 
 mutation DestroyTodo($id: Int!) {
-  destroyTodo(id: $id) {
-    id
+  delete_todos(where: { id: { _eq: $id } }) {
+    returning {
+      id
+    }
   }
 }

@@ -11,7 +11,7 @@ import { Page } from "./constants";
 import About from "./containers/About";
 
 export const client = new ApolloClient({
-  uri: "http://localhost:4000"
+  uri: "https://<APP NAME>.herokuapp.com/v1/graphql"
 });
 
 const styles = createStyles({
