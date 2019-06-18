@@ -1,7 +1,8 @@
 import gql from "graphql-tag";
-import * as React from "react";
 import * as ReactApollo from "react-apollo";
+import * as React from "react";
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type Maybe<T> = T | null;
 
 export const CreateTodoDocument = gql`
   mutation CreateTodo($name: String!) {
@@ -18,19 +19,12 @@ export type CreateTodoMutationFn = ReactApollo.MutationFn<
   CreateTodoMutation,
   CreateTodoMutationVariables
 >;
+export type CreateTodoComponentProps = Omit<
+  ReactApollo.MutationProps<CreateTodoMutation, CreateTodoMutationVariables>,
+  "mutation"
+>;
 
-export const CreateTodoComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.MutationProps<
-        CreateTodoMutation,
-        CreateTodoMutationVariables
-      >,
-      "mutation"
-    >,
-    "variables"
-  > & { variables?: CreateTodoMutationVariables }
-) => (
+export const CreateTodoComponent = (props: CreateTodoComponentProps) => (
   <ReactApollo.Mutation<CreateTodoMutation, CreateTodoMutationVariables>
     mutation={CreateTodoDocument}
     {...props}
@@ -74,19 +68,12 @@ export type UpdateTodoMutationFn = ReactApollo.MutationFn<
   UpdateTodoMutation,
   UpdateTodoMutationVariables
 >;
+export type UpdateTodoComponentProps = Omit<
+  ReactApollo.MutationProps<UpdateTodoMutation, UpdateTodoMutationVariables>,
+  "mutation"
+>;
 
-export const UpdateTodoComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.MutationProps<
-        UpdateTodoMutation,
-        UpdateTodoMutationVariables
-      >,
-      "mutation"
-    >,
-    "variables"
-  > & { variables?: UpdateTodoMutationVariables }
-) => (
+export const UpdateTodoComponent = (props: UpdateTodoComponentProps) => (
   <ReactApollo.Mutation<UpdateTodoMutation, UpdateTodoMutationVariables>
     mutation={UpdateTodoDocument}
     {...props}
@@ -128,19 +115,12 @@ export type DestroyTodoMutationFn = ReactApollo.MutationFn<
   DestroyTodoMutation,
   DestroyTodoMutationVariables
 >;
+export type DestroyTodoComponentProps = Omit<
+  ReactApollo.MutationProps<DestroyTodoMutation, DestroyTodoMutationVariables>,
+  "mutation"
+>;
 
-export const DestroyTodoComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.MutationProps<
-        DestroyTodoMutation,
-        DestroyTodoMutationVariables
-      >,
-      "mutation"
-    >,
-    "variables"
-  > & { variables?: DestroyTodoMutationVariables }
-) => (
+export const DestroyTodoComponent = (props: DestroyTodoComponentProps) => (
   <ReactApollo.Mutation<DestroyTodoMutation, DestroyTodoMutationVariables>
     mutation={DestroyTodoDocument}
     {...props}
@@ -178,13 +158,12 @@ export const TodosDocument = gql`
     }
   }
 `;
+export type TodosComponentProps = Omit<
+  ReactApollo.QueryProps<TodosQuery, TodosQueryVariables>,
+  "query"
+>;
 
-export const TodosComponent = (
-  props: Omit<
-    Omit<ReactApollo.QueryProps<TodosQuery, TodosQueryVariables>, "query">,
-    "variables"
-  > & { variables?: TodosQueryVariables }
-) => (
+export const TodosComponent = (props: TodosComponentProps) => (
   <ReactApollo.Query<TodosQuery, TodosQueryVariables>
     query={TodosDocument}
     {...props}
@@ -261,8 +240,6 @@ export type TodosQuery = { __typename?: "query_root" } & {
     { __typename?: "todos" } & Pick<Todos, "id" | "name" | "complete">
   >;
 };
-
-export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -308,6 +285,7 @@ export type Integer_Comparison_Exp = {
 
 /** mutation root */
 export type Mutation_Root = {
+  __typename?: "mutation_root";
   /** delete data from the table: "todos" */
   delete_todos?: Maybe<Todos_Mutation_Response>;
   /** insert data into the table: "todos" */
@@ -352,6 +330,7 @@ export enum Order_By {
 
 /** query root */
 export type Query_Root = {
+  __typename?: "query_root";
   /** fetch data from the table: "todos" */
   todos: Array<Todos>;
   /** fetch aggregated fields from the table: "todos" */
@@ -385,6 +364,7 @@ export type Query_RootTodos_By_PkArgs = {
 
 /** subscription root */
 export type Subscription_Root = {
+  __typename?: "subscription_root";
   /** fetch data from the table: "todos" */
   todos: Array<Todos>;
   /** fetch aggregated fields from the table: "todos" */
@@ -437,6 +417,7 @@ export type Text_Comparison_Exp = {
 
 /** columns and relationships of "todos" */
 export type Todos = {
+  __typename?: "todos";
   complete: Scalars["Boolean"];
   id: Scalars["Int"];
   name: Scalars["String"];
@@ -444,12 +425,14 @@ export type Todos = {
 
 /** aggregated selection of "todos" */
 export type Todos_Aggregate = {
+  __typename?: "todos_aggregate";
   aggregate?: Maybe<Todos_Aggregate_Fields>;
   nodes: Array<Todos>;
 };
 
 /** aggregate fields of "todos" */
 export type Todos_Aggregate_Fields = {
+  __typename?: "todos_aggregate_fields";
   avg?: Maybe<Todos_Avg_Fields>;
   count?: Maybe<Scalars["Int"]>;
   max?: Maybe<Todos_Max_Fields>;
@@ -492,6 +475,7 @@ export type Todos_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Todos_Avg_Fields = {
+  __typename?: "todos_avg_fields";
   id?: Maybe<Scalars["Float"]>;
 };
 
@@ -530,6 +514,7 @@ export type Todos_Insert_Input = {
 
 /** aggregate max on columns */
 export type Todos_Max_Fields = {
+  __typename?: "todos_max_fields";
   id?: Maybe<Scalars["Int"]>;
   name?: Maybe<Scalars["String"]>;
 };
@@ -542,6 +527,7 @@ export type Todos_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Todos_Min_Fields = {
+  __typename?: "todos_min_fields";
   id?: Maybe<Scalars["Int"]>;
   name?: Maybe<Scalars["String"]>;
 };
@@ -554,6 +540,7 @@ export type Todos_Min_Order_By = {
 
 /** response of any mutation on the table "todos" */
 export type Todos_Mutation_Response = {
+  __typename?: "todos_mutation_response";
   /** number of affected rows by the mutation */
   affected_rows: Scalars["Int"];
   /** data of the affected rows by the mutation */
@@ -598,6 +585,7 @@ export type Todos_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Todos_Stddev_Fields = {
+  __typename?: "todos_stddev_fields";
   id?: Maybe<Scalars["Float"]>;
 };
 
@@ -608,6 +596,7 @@ export type Todos_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Todos_Stddev_Pop_Fields = {
+  __typename?: "todos_stddev_pop_fields";
   id?: Maybe<Scalars["Float"]>;
 };
 
@@ -618,6 +607,7 @@ export type Todos_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Todos_Stddev_Samp_Fields = {
+  __typename?: "todos_stddev_samp_fields";
   id?: Maybe<Scalars["Float"]>;
 };
 
@@ -628,6 +618,7 @@ export type Todos_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Todos_Sum_Fields = {
+  __typename?: "todos_sum_fields";
   id?: Maybe<Scalars["Int"]>;
 };
 
@@ -648,6 +639,7 @@ export enum Todos_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Todos_Var_Pop_Fields = {
+  __typename?: "todos_var_pop_fields";
   id?: Maybe<Scalars["Float"]>;
 };
 
@@ -658,6 +650,7 @@ export type Todos_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Todos_Var_Samp_Fields = {
+  __typename?: "todos_var_samp_fields";
   id?: Maybe<Scalars["Float"]>;
 };
 
@@ -668,6 +661,7 @@ export type Todos_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Todos_Variance_Fields = {
+  __typename?: "todos_variance_fields";
   id?: Maybe<Scalars["Float"]>;
 };
 
