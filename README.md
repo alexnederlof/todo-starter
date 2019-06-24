@@ -25,6 +25,8 @@ git clone https://github.com/tiagob/ts-react-apollo-node.git
 cd ts-react-apollo-node
 ```
 
+**All commands below are run from the root project directory `ts-react-apollo-node`.**
+
 ### Install dependencies
 
 ```bash
@@ -54,7 +56,7 @@ Set `HASURA_GRAPHQL_ENABLE_CONSOLE=false` enviornment variable in the [Heroku Da
 Install the hasura client
 https://docs.hasura.io/1.0/graphql/manual/hasura-cli/install-hasura-cli.html#install-hasura-cli
 
-Apply migrations. Assuming from the root project directory `ts-react-apollo-node`
+Apply migrations
 
 ```bash
 cd hasura
@@ -63,7 +65,7 @@ hasura migrate apply --version "1560790778833"
 
 ## View Hasura Console
 
-Hasura console provides admin views for all postgres tables and a GraphQL playground to demo queries on. Assuming from the root project directory `ts-react-apollo-node`
+Hasura console provides admin views for all postgres tables and a GraphQL playground to demo queries on.
 
 ```bash
 cd hasura
@@ -71,8 +73,6 @@ hasura console
 ```
 
 ## Run
-
-Assuming from the root project directory `ts-react-apollo-node`
 
 ```bash
 cd client
