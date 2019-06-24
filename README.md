@@ -1,6 +1,6 @@
 # Full-stack todo starter app
 
-TypeScript with React, Apollo and Node example
+TypeScript with React, Apollo and Hasura example
 
 ## Setup
 
@@ -33,17 +33,37 @@ yarn install
 
 ## Setup [Hasura](https://hasura.io/)
 
-For Heroku follow the [docs](https://docs.hasura.io/1.0/graphql/manual/getting-started/heroku-simple.html). Note your `app name`.
+### Create an Hasura instance on Heroku
 
-Set `HASURA_GRAPHQL_ENABLE_CONSOLE=false` enviornment variable.
+Adapting the Hasura [docs](https://docs.hasura.io/1.0/graphql/manual/getting-started/heroku-simple.html), [deploy a Heroku instance with Hasura](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku) setup. Note your `app name`.
+
+### Replace `<APP_NAME>` in this project with your Heroku app name
+
+Replace `MY_APP_NAME` in the command below with your Heroku app name.
+
+```bash
+LC_ALL=C find . -type f \( -iname codegen.yml -o -iname config.yaml -o -iname App.tsx \) -exec sed -i '' s/\<APP_NAME\>/MY_APP_NAME/ {} +
+```
+
+### Initialize the database
+
+Adapting commands from [Hasura migration docs](https://docs.hasura.io/1.0/graphql/manual/migrations/new-database.html)
+
+Set `HASURA_GRAPHQL_ENABLE_CONSOLE=false` enviornment variable in the [Heroku Dashboard](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard).
 
 Install the hasura client
 https://docs.hasura.io/1.0/graphql/manual/hasura-cli/install-hasura-cli.html#install-hasura-cli
 
-Apply migrations
+Apply migrations. Assuming from the root project directory `ts-react-apollo-node`
+
+```bash
+cd hasura
 hasura migrate apply --version "1560790778833"
+```
 
 ## View Hasura Console
+
+Hasura console provides admin views for all postgres tables and a GraphQL playground to demo queries on. Assuming from the root project directory `ts-react-apollo-node`
 
 ```bash
 cd hasura
@@ -52,16 +72,7 @@ hasura console
 
 ## Run
 
-Create two bash terminals (terminal 1, terminal 2). `cd` into the root of the cloned repo in both.
-
-In terminal 1
-
-```bash
-cd server
-yarn watch
-```
-
-In terminal 2
+Assuming from the root project directory `ts-react-apollo-node`
 
 ```bash
 cd client
@@ -102,6 +113,7 @@ killall node
 
 ## References
 
+- [Hasura](https://hasura.io/)
 - [TypesSript](https://www.typescriptlang.org/)
 - [React](https://reactjs.org/)
 - [Apollo Client](https://www.apollographql.com/docs/react/)
