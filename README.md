@@ -101,6 +101,10 @@ yarn watch
 
 Press `F5` or click the green debug icon for `Chrome` [launch configuration](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) to attach.
 
+## Code generation
+
+Repo uses [graphql-code-generator](https://graphql-code-generator.com/). Client React components for GraphQL queries and mutations are automatically generated via the [typescript-react-apollo plugin](https://graphql-code-generator.com/docs/plugins/typescript-react-apollo#usage) from the `*.graphql` files. This code is automattically generated when running `yarn watch`. It lives in the `/client/src/generated` folder.
+
 ## Gotchas
 
 ### EADDRINUSE, Address already in use
