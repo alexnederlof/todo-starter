@@ -56,6 +56,52 @@ cd server
 yarn sync-db
 ```
 
+### Setup [Firebase Authentication](https://firebase.google.com/docs/auth)
+
+#### Create and register Firebase
+
+Complete steps [#1](https://firebase.google.com/docs/web/setup#create-project) and [#2](https://firebase.google.com/docs/web/setup#register-app) in the [setup docs](https://firebase.google.com/docs/web/setup)
+
+#### Setup the client for Firebase
+
+Copy the Firebase config variables to `/client/.env`. Lookup your config variables [Project Settings Config](https://support.google.com/firebase/answer/7015592).
+
+Create and edit `client/.env` with your favorite editor (using vim here)
+
+```bash
+vim client/.env
+```
+
+Copy the fields from the Project Settings Config replacing `apiKey`, `authDomain` and `projectId` in `client/.env`
+
+```
+REACT_APP_FIREBASE_API_KEY=apiKey
+REACT_APP_FIREBASE_AUTH_DOMAIN=authDomain
+REACT_APP_FIREBASE_PROJECT_ID=projectId
+```
+
+**All [custom environment variables](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables) on the client must be prefaced with `REACT_APP_`**
+
+#### Setup the server for Firebase
+
+Generate and download the Firebase Application Credentials into `server/keys`. Note the firebase generated json key path.
+
+1. In the Firebase console, open Settings > Service Accounts.
+1. Click Generate New Private Key, then confirm by clicking Generate Key.
+
+Create and edit `server/.env` with your favorite editor (using vim here)
+
+```bash
+vim server/.env
+```
+
+Replace `MY_GENERATED_FIREBASE_KEY_PATH` with the path to your firebase generated json key. Replace `databaseURL` with the project's database url found on the Settings > General page on the Firebase console after adding the Web App in the step above "Setup the client for Firebase"
+
+```
+GOOGLE_APPLICATION_CREDENTIALS=MY_GENERATED_FIREBASE_KEY_PATH
+FIREBASE_DATABASE_URL=databaseURL
+```
+
 ## Run
 
 Create two bash terminals (terminal 1, terminal 2). `cd` into the root of the cloned repo in both.
@@ -128,3 +174,5 @@ killall node
 - [GraphQL Codegen](https://graphql-code-generator.com/docs/getting-started/)
 - [Sequelize](http://docs.sequelizejs.com/)
 - [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
+- [Firebase Authentication](https://firebase.google.com/docs/auth)
+- [dotenv](https://github.com/motdotla/dotenv)

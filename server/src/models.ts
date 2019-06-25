@@ -4,6 +4,7 @@ export class Todo extends Model {
   public id!: number;
   public name!: string;
   public complete!: boolean;
+  public uid!: string;
 }
 
 export const sequelize = new Sequelize({
@@ -26,6 +27,10 @@ Todo.init(
     },
     complete: {
       type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    uid: {
+      type: DataTypes.STRING,
       allowNull: false
     }
   },
