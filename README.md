@@ -72,7 +72,7 @@ vim client/.env
 
 Copy the Firebase config variables (`apiKey`, `authDomain` and `projectId`) to `/client/.env`. Found in step [#2](https://firebase.google.com/docs/web/setup#register-app) or in [Project Settings Config](https://support.google.com/firebase/answer/7015592).
 
-![Firebase Config](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/tree/firebase-auth/firebaseConfig.png)
+![Firebase Config](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/firebase-auth/firebaseConfig.png)
 
 ```
 REACT_APP_FIREBASE_API_KEY=apiKey
