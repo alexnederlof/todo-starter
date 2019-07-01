@@ -1,20 +1,22 @@
 import {
   ApolloServer,
-  ForbiddenError,
-  AuthenticationError
+  AuthenticationError,
+  ForbiddenError
 } from "apollo-server-express";
 import program from "commander";
-
+import { OAuth2Client } from "google-auth-library";
+import cors from "cors";
+import express from "express";
 import resolvers from "./resolvers";
 import typeDefs from "./schema";
 import { sequelize } from "./models";
-import admin from "./utils/firebaseAdmin";
-import cors from "cors";
-import express from "express";
 
 program.option("-s, --sync-db", "Sync database").parse(process.argv);
 
+const client = new OAuth2Client(process.env.OAUTH2_CLIENT_ID);
+
 const origin = "http://localhost:3000";
+
 const host = "http://localhost:4000";
 
 const run = () => {
@@ -43,20 +45,18 @@ const run = () => {
 
         // Get the user token from the headers
         const token = req.headers.authorization || "";
-        if (!token) {
+        if (!token || !process.env.OAUTH2_CLIENT_ID) {
           throw new AuthenticationError("must authenticate");
         }
-
-        let decodedToken: admin.auth.DecodedIdToken;
-        try {
-          decodedToken = await admin
-            .auth()
-            .verifyIdToken(token.substr("Bearer ".length));
-        } catch (error) {
+        const ticket = await client.verifyIdToken({
+          idToken: token.substr("Bearer ".length),
+          audience: process.env.OAUTH2_CLIENT_ID
+        });
+        const uid = ticket.getUserId();
+        if (!uid) {
           throw new ForbiddenError("not authorized");
         }
-        const user = await admin.auth().getUser(decodedToken.uid);
-        return { user };
+        return { user: { uid } };
       }
     });
     server.applyMiddleware({ app });

@@ -1,7 +1,6 @@
 import React, { ComponentType } from "react";
 import { Route, Redirect, RouteProps } from "react-router";
-import firebase from "../utils/firebase";
-import { Page } from "../constants";
+import { oauth2Client } from "../utils/oauth2Client";
 
 interface Props extends RouteProps {
   component: ComponentType<RouteProps>;
@@ -12,12 +11,12 @@ export default function PrivateRoute({ component: Component, ...rest }: Props) {
     <Route
       {...rest}
       render={props =>
-        firebase.auth().currentUser ? (
+        oauth2Client.credentials.id_token ? (
           <Component {...props} />
         ) : (
           <Redirect
             to={{
-              pathname: `/${Page.signIn}`,
+              pathname: "/",
               state: { from: props.location }
             }}
           />

@@ -4,10 +4,9 @@ import {
   MutationUpdateTodoArgs,
   MutationDestroyTodoArgs
 } from "./generated/graphql";
-import admin from "./utils/firebaseAdmin";
 
 interface Context {
-  user: admin.auth.UserRecord;
+  user: { uid: string };
 }
 
 export default {
