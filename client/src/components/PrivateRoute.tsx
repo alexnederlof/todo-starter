@@ -1,22 +1,26 @@
 import React, { ComponentType } from "react";
 import { Route, Redirect, RouteProps } from "react-router";
-import { oauth2Client } from "../utils/oauth2Client";
 
 interface Props extends RouteProps {
   component: ComponentType<RouteProps>;
+  token: string | null;
 }
 
-export default function PrivateRoute({ component: Component, ...rest }: Props) {
+export default function PrivateRoute({
+  component: Component,
+  token,
+  ...rest
+}: Props) {
   return (
     <Route
       {...rest}
       render={props =>
-        oauth2Client.credentials.id_token ? (
+        token ? (
           <Component {...props} />
         ) : (
           <Redirect
             to={{
-              pathname: "/",
+              pathname: "/sign-in",
               state: { from: props.location }
             }}
           />

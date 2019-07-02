@@ -24,12 +24,14 @@ const useStyles = makeStyles({
 
 export default function App() {
   const classes = useStyles();
+  const params = new URLSearchParams(document.location.hash.substring(1));
+  const accessToken = params.get("access_token");
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={client(accessToken)}>
       <Router>
         <div className={classes.root}>
           <Header />
-          <PrivateRoute exact path="/" component={Todos} />
+          <PrivateRoute exact path="/" component={Todos} token={accessToken} />
           <Route path={`/${Page.signIn}`} component={SignIn} />
           <Route path={`/${Page.about}`} component={About} />
         </div>

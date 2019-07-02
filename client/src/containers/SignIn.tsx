@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
-import useReactRouter from "use-react-router";
-import { oauth2Client } from "../utils/oauth2Client";
 
 const useStyles = makeStyles({
   root: {
@@ -12,35 +10,34 @@ const useStyles = makeStyles({
   }
 });
 
-const setToken = async (history: any, code: string) => {
-  const { tokens } = await oauth2Client.getToken(code);
-  oauth2Client.setCredentials(tokens);
-  history.push("/");
+const redirectUri = "http://localhost:3000";
+// Google's OAuth 2.0 endpoint for requesting an access token
+const oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth";
+// Parameters to pass to OAuth 2.0 endpoint.
+const oauth2Params = {
+  client_id: process.env.REACT_APP_OAUTH2_CLIENT_ID as string,
+  redirect_uri: redirectUri,
+  response_type: "token",
+  scope: "email",
+  include_granted_scopes: "true",
+  state: "pass-through value"
 };
 
 export default function SignIn() {
   const classes = useStyles();
-  const { history } = useReactRouter();
-  // If history changes re-direct to /
-  useEffect(() => {
-    const params = new URLSearchParams(document.location.search.substring(1));
-    let code = params.get("code");
-    if (code) {
-      setToken(history, code);
-    }
-  }, [history]);
-  // generate a url that asks permissions for Blogger and Google Calendar scopes
-  const scopes = ["email", "profile"];
-
-  const url = oauth2Client.generateAuthUrl({
-    // If you only need one scope you can pass it as a string
-    scope: scopes
-  });
-
   return (
     <div className={classes.root}>
-      <Button href={url} variant="contained">
-        Sign in with Google
+      <Button
+        variant="contained"
+        onClick={async () => {
+          const params = new URLSearchParams("");
+          for (const [key, value] of Object.entries(oauth2Params)) {
+            params.append(key, value);
+          }
+          window.location.assign(`${oauth2Endpoint}?${params.toString()}`);
+        }}
+      >
+        Sign In with Google
       </Button>
     </div>
   );
