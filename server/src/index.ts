@@ -4,7 +4,7 @@ import {
   ForbiddenError
 } from "apollo-server-express";
 import program from "commander";
-import { OAuth2Client } from "google-auth-library";
+import fetch from "node-fetch";
 import cors from "cors";
 import express from "express";
 import resolvers from "./resolvers";
@@ -13,11 +13,13 @@ import { sequelize } from "./models";
 
 program.option("-s, --sync-db", "Sync database").parse(process.argv);
 
-const client = new OAuth2Client(process.env.OAUTH2_CLIENT_ID);
-
 const origin = "http://localhost:3000";
 
 const host = "http://localhost:4000";
+
+interface TokenInfo {
+  user_id?: string;
+}
 
 const run = () => {
   if (program.syncDb) {
@@ -44,15 +46,18 @@ const run = () => {
         // }
 
         // Get the user token from the headers
-        const token = req.headers.authorization || "";
-        if (!token || !process.env.OAUTH2_CLIENT_ID) {
+        const authorization = req.headers.authorization || "";
+        if (!authorization) {
           throw new AuthenticationError("must authenticate");
         }
-        const ticket = await client.verifyIdToken({
-          idToken: token.substr("Bearer ".length),
-          audience: process.env.OAUTH2_CLIENT_ID
-        });
-        const uid = ticket.getUserId();
+        const accessToken = authorization.substr("Bearer ".length);
+        // Get token info from google given the access token
+        // https://stackoverflow.com/a/24646356/709040
+        const response = await fetch(
+          `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
+        );
+        const tokenInfo = (await response.json()) as TokenInfo;
+        const uid = tokenInfo.user_id;
         if (!uid) {
           throw new ForbiddenError("not authorized");
         }
