@@ -14,7 +14,6 @@ import { sequelize } from "./models";
 program.option("-s, --sync-db", "Sync database").parse(process.argv);
 
 const origin = "http://localhost:3000";
-
 const host = "http://localhost:4000";
 
 interface TokenInfo {

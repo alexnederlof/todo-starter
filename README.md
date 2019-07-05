@@ -56,13 +56,23 @@ cd server
 yarn sync-db
 ```
 
-## Setup [Firebase Authentication](https://firebase.google.com/docs/auth)
+## Setup Google Auth
 
-### Create and register Firebase
+### Configure a project
 
-Complete steps [#1](https://firebase.google.com/docs/web/setup#create-project) and [#2](https://firebase.google.com/docs/web/setup#register-app) in the [setup docs](https://firebase.google.com/docs/web/setup)
+Complete the `CONFIGURE A PROJECT` flow on the [Google Auth docs](https://developers.google.com/identity/sign-in/web/sign-in).
 
-### Setup the client for Firebase
+![Configure a Project](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/google-auth/ReadmeImages/configureAProject.png)
+
+Configure OAuth Client by selecting `Web browser` and adding `http://localhost:3000` to the authorized Javascript origin.
+
+![Configure OAuth Client](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/google-auth/ReadmeImages/configureOAuthClient.png)
+
+Copy your generated Client ID.
+
+![Copy Client ID](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/google-auth/ReadmeImages/copyClientId.png)
+
+### Add Client ID to `client/.env`
 
 Create and edit `client/.env` with your favorite editor (using vim)
 
@@ -70,41 +80,13 @@ Create and edit `client/.env` with your favorite editor (using vim)
 vim client/.env
 ```
 
-Copy the Firebase config variables (`apiKey`, `authDomain` and `projectId`) to `/client/.env`. Found in step [#2](https://firebase.google.com/docs/web/setup#register-app) or in [Project Settings Config](https://support.google.com/firebase/answer/7015592).
-
-![Firebase Config](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/tree/firebase-auth/firebaseConfig.png)
+Replace `clientId` with your generated Client ID.
 
 ```
-REACT_APP_FIREBASE_API_KEY=apiKey
-REACT_APP_FIREBASE_AUTH_DOMAIN=authDomain
-REACT_APP_FIREBASE_PROJECT_ID=projectId
+REACT_APP_OAUTH2_CLIENT_ID=clientId
 ```
 
 **All [custom environment variables](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables) on the client must be prefaced with `REACT_APP_`**
-
-### Setup the server for Firebase
-
-Generate and download the Firebase Application Credentials into `server/keys`. Note the firebase generated json key path.
-
-1. In the Firebase console, open Project Settings > [Service Accounts](https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk).
-1. Click Generate New Private Key, then confirm by clicking Generate Key.
-
-Create and edit `server/.env` with your favorite editor (using vim)
-
-```bash
-vim server/.env
-```
-
-Replace `MY_GENERATED_FIREBASE_KEY_PATH` with the full path to your firebase generated json key.
-
-```
-GOOGLE_APPLICATION_CREDENTIALS=MY_GENERATED_FIREBASE_KEY_PATH
-```
-
-### Enable Google Sign-In in the Firebase console:
-
-1. In the [Firebase console](https://console.firebase.google.com/), open the Auth section.
-1. On the Sign in method tab, enable the Google sign-in method, add a "Project support email" and click Save.
 
 ## Run
 
@@ -155,6 +137,10 @@ cd server
 yarn watch-debug
 ```
 
+## Google OAuth
+
+Not setup to use refresh tokens because that [requires the client secret](https://developers.google.com/identity/protocols/OAuth2WebServer#exchange-authorization-code) which shouldn't be exposed on the web site. It's simpler to log out the user when the access token expires (what we're doing) instead of handling refresh requests on the server.
+
 ## Code generation
 
 Repo uses [graphql-code-generator](https://graphql-code-generator.com/). Client React components for GraphQL queries and mutations are automatically generated via the [typescript-react-apollo plugin](https://graphql-code-generator.com/docs/plugins/typescript-react-apollo#usage) from the `*.graphql` files. Server relies on type generation via the [typescript plugin](https://graphql-code-generator.com/docs/plugins/typescript). This code is automattically generated when running `yarn watch` for client and server. It lives in the `/src/generated` folder in both `/client` and `/server`.
@@ -178,5 +164,5 @@ killall node
 - [GraphQL Codegen](https://graphql-code-generator.com/docs/getting-started/)
 - [Sequelize](http://docs.sequelizejs.com/)
 - [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
-- [Firebase Authentication](https://firebase.google.com/docs/auth)
+- [Google Authentication](https://developers.google.com/identity/protocols/OAuth2UserAgent)
 - [dotenv](https://github.com/motdotla/dotenv)

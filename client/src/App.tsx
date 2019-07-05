@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ApolloProvider } from "react-apollo";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
@@ -24,8 +24,25 @@ const useStyles = makeStyles({
 
 export default function App() {
   const classes = useStyles();
+  let [accessToken, setAccessToken] = useState<string | null>(null);
+  let [expiresIn, setExpiresIn] = useState<string | null>(null);
   const params = new URLSearchParams(document.location.hash.substring(1));
-  const accessToken = params.get("access_token");
+  accessToken = params.get("access_token") || accessToken;
+  expiresIn = params.get("expires_in") || expiresIn;
+  document.location.hash = "";
+  useEffect(() => {
+    setAccessToken(accessToken);
+    setExpiresIn(expiresIn);
+    let timeoutID: undefined | number;
+    if (expiresIn) {
+      timeoutID = (setTimeout(
+        () => setAccessToken(null),
+        // Seconds to milliseconds
+        Number(expiresIn) * 1000
+      ) as unknown) as number;
+    }
+    return () => clearTimeout(timeoutID);
+  }, [accessToken, expiresIn]);
   return (
     <ApolloProvider client={client(accessToken)}>
       <Router>

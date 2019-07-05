@@ -1,5 +1,6 @@
 import React, { ComponentType } from "react";
 import { Route, Redirect, RouteProps } from "react-router";
+import { Page } from "../constants";
 
 interface Props extends RouteProps {
   component: ComponentType<RouteProps>;
@@ -20,7 +21,7 @@ export default function PrivateRoute({
         ) : (
           <Redirect
             to={{
-              pathname: "/sign-in",
+              pathname: `/${Page.signIn}`,
               state: { from: props.location }
             }}
           />
