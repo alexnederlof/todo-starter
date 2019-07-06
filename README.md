@@ -105,4 +105,4 @@ killall node
 - [React](https://reactjs.org/)
 - [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
 - [Firestore](https://firebase.google.com/docs/firestore)
-- [dotenv](https://github.com/motdotla/dotenv
+- [dotenv](https://github.com/motdotla/dotenv)
