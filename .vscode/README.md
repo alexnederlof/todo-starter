@@ -6,10 +6,6 @@ Use IntelliSense to learn about possible attributes.
 Hover to view descriptions of existing attributes.
 For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 
-### Server setup
-
-https://github.com/Microsoft/vscode-recipes/tree/master/nodemon
-
 ### Client setup
 
 https://facebook.github.io/create-react-app/docs/setting-up-your-editor#visual-studio-code
