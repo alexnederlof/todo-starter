@@ -61,29 +61,6 @@ REACT_APP_FIREBASE_PROJECT_ID=projectId
 
 Follow the instructions on the [docs](https://firebase.google.com/docs/firestore/quickstart).
 
-### Setup database rules
-
-In the Cloud Firestore section of the Firebase console [Rules tab](https://console.firebase.google.com/project/_/database/firestore/rules) paste this configuration:
-
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    // Make sure the uid of the requesting user matches name of the user
-    // document. The wildcard expression {userId} makes the userId variable
-    // available in rules.
-    match /users/{userId}/todos/{todoId} {
-      allow read, write: if request.auth.uid == userId;
-    }
-  }
-}
-```
-
-### Enable Google Sign-In in the Firebase console
-
-1. In the [Firebase console](https://console.firebase.google.com/), open the Auth section.
-1. On the Sign in method tab, enable the Google sign-in method, add a "Project support email" and click Save.
-
 ## Run
 
 ```bash
@@ -128,5 +105,4 @@ killall node
 - [React](https://reactjs.org/)
 - [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
 - [Firestore](https://firebase.google.com/docs/firestore)
-- [Firebase Authentication](https://firebase.google.com/docs/auth)
 - [dotenv](https://github.com/motdotla/dotenv

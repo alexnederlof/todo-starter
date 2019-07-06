@@ -6,8 +6,6 @@ import Todos from "./containers/Todos";
 import Header from "./components/Header";
 import { Page } from "./constants";
 import About from "./containers/About";
-import PrivateRoute from "./components/PrivateRoute";
-import SignIn from "./containers/SignIn";
 
 const useStyles = makeStyles({
   root: {
@@ -26,8 +24,7 @@ export default function App() {
     <Router>
       <div className={classes.root}>
         <Header />
-        <PrivateRoute exact path="/" component={Todos} />
-        <Route path={`/${Page.signIn}`} component={SignIn} />
+        <Route exact path="/" component={Todos} />
         <Route path={`/${Page.about}`} component={About} />
       </div>
     </Router>

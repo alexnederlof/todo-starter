@@ -1,6 +1,5 @@
 export enum Page {
-  about = "about",
-  signIn = "sign-in"
+  about = "about"
 }
 
 export interface TodoType {
