@@ -31,7 +31,7 @@ cd ts-react-apollo-node
 yarn install
 ```
 
-## Setup [Firebase Authentication](https://firebase.google.com/docs/auth)
+## Setup Firebase
 
 ### Create and register Firebase
 
