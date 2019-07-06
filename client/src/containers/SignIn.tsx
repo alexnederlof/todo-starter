@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function About() {
+export default function SignIn() {
   const classes = useStyles();
   const { history } = useReactRouter();
   return (
@@ -26,7 +26,7 @@ export default function About() {
           }
         }}
       >
-        Sign In with Google
+        Sign in with Google
       </Button>
     </div>
   );
