@@ -94,17 +94,17 @@ cd firebase
 firebase deploy --only functions
 ```
 
-Note the webhook URL (`MY_WEBHOOK_URL`). We'll need it later.
+Note the "Function URL (webhook)" (`MY_WEBHOOK_URL`). We'll need it later.
 
 ## Setup [Hasura](https://hasura.io/)
 
 ### Create an Hasura instance on Heroku
 
-Adapting the Hasura [docs](https://docs.hasura.io/1.0/graphql/manual/getting-started/heroku-simple.html), [deploy a Heroku instance with Hasura](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku) setup. Note your `app name`.
+Adapting the Hasura [docs](https://docs.hasura.io/1.0/graphql/manual/getting-started/heroku-simple.html), [deploy a Heroku instance with Hasura](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku) setup. Note your app name (`MY_APP_NAME`).
 
 ### Set the environment variables in Heroku
 
-In the [Heroku Dashboard](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard) click `Reveal Config Vars` and add the folowing.
+In the [Heroku Dashboard](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard) under "Settings" click "Reveal Config Vars" and add the folowing.
 
 ![Heroku Config Vars](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/hasura-firebase-auth/assets/herokuConfigVars.png)
 
@@ -120,13 +120,9 @@ Set the admin secret to something you decide. `HASURA_GRAPHQL_AUTH_HOOK` can't b
 HASURA_GRAPHQL_ADMIN_SECRET=MY_HASURA_SECRET
 ```
 
-Disable the console. We can still access it via the Hasura CLI. This is needed to apply the DB migrations.
+### Replace `<HASURA_SECRET>` for GraphQL codegen
 
-```
-HASURA_GRAPHQL_ENABLE_CONSOLE=false
-```
-
-### Replace `MY_HASURA_SECRET` for GraphQL codegen
+Replace `MY_HASURA_SECRET` in the command below with your Hasura secret.
 
 ```bash
 LC_ALL=C find . -type f \( -iname codegen.yml \) -exec sed -i '' s/\<HASURA_SECRET\>/MY_HASURA_SECRET/ {} +
@@ -150,17 +146,14 @@ Apply migrations
 
 ```bash
 cd hasura
-hasura migrate apply
+hasura migrate apply --admin-secret MY_HASURA_SECRET
 ```
 
 ## View Hasura Console
 
 Hasura console provides admin views for all postgres tables and a GraphQL playground to demo queries.
 
-```bash
-cd hasura
-hasura console --admin-secret MY_HASURA_SECRET
-```
+https://MY_HEROKU_APP_NAME.herokuapp.com/console
 
 ## Run
 

@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."todos" DROP COLUMN "uid"
-  type: run_sql

@@ -1,16 +1,11 @@
 - args:
-    role: user
-    table:
-      name: todos
-      schema: public
-  type: drop_insert_permission
-- args:
     permission:
-      check: {}
       columns:
-      - id
-      - name
       - complete
+      - name
+      filter:
+        uid:
+          _eq: X-Hasura-User-Id
       localPresets:
       - key: ""
         value: ""
@@ -19,4 +14,4 @@
     table:
       name: todos
       schema: public
-  type: create_insert_permission
+  type: create_update_permission

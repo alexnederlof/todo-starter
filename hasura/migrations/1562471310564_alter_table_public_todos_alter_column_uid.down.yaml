@@ -1,9 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."todos" ALTER COLUMN "uid" TYPE character varying;
-  type: run_sql
-- args:
-    sql: ALTER TABLE "public"."todos" ADD CONSTRAINT "todos_uid_key" UNIQUE ("uid")
-  type: run_sql
-- args:
-    sql: COMMENT ON COLUMN "public"."todos"."uid" IS 'null'
-  type: run_sql

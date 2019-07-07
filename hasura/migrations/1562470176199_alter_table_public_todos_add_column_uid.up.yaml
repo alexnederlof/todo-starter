@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."todos" ADD COLUMN "uid" varchar NOT NULL UNIQUE
-  type: run_sql
