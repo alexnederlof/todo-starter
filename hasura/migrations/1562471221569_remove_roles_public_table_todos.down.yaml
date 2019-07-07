@@ -1,0 +1,12 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns: []
+      filter:
+        uid:
+          _eq: X-Hasura-User-Id
+    role: anonymous
+    table:
+      name: todos
+      schema: public
+  type: create_select_permission

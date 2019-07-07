@@ -33,25 +33,114 @@ cd ts-react-apollo-node
 yarn install
 ```
 
+## Setup [Firebase Authentication](https://firebase.google.com/docs/auth)
+
+### Create and register Firebase
+
+Complete steps [#1](https://firebase.google.com/docs/web/setup#create-project) and [#2](https://firebase.google.com/docs/web/setup#register-app) in the [setup docs](https://firebase.google.com/docs/web/setup)
+
+### Setup the client for Firebase
+
+Create and edit `client/.env` with your favorite editor (using vim)
+
+```bash
+vim client/.env
+```
+
+Copy the Firebase config variables (`apiKey`, `authDomain` and `projectId`) to `/client/.env`. Found in step [#2](https://firebase.google.com/docs/web/setup#register-app) or in [Project Settings Config](https://support.google.com/firebase/answer/7015592).
+
+![Firebase Config](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/hasura-firebase-auth/assets/firebaseConfig.png)
+
+```
+REACT_APP_FIREBASE_API_KEY=apiKey
+REACT_APP_FIREBASE_AUTH_DOMAIN=authDomain
+REACT_APP_FIREBASE_PROJECT_ID=projectId
+```
+
+**All [custom environment variables](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables) on the client must be prefaced with `REACT_APP_`**
+
+### Enable Google Sign-In in the Firebase console
+
+1. In the [Firebase console](https://console.firebase.google.com/), open the Auth section.
+1. On the Sign in method tab, enable the Google sign-in method, add a "Project support email" and click Save.
+
+### Setup [Firebase Functions](https://firebase.google.com/docs/functions) to authenticate Hasura
+
+[Hasura authentication](https://docs.hasura.io/1.0/graphql/manual/auth/authentication/webhook.html) relies on a webhook which we'll setup on Firebase Functions.
+![Hasura Webhook Auth](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/hasura-firebase-auth/assets/hasuraWebhookAuth.png)
+
+Install the Firebase CLI
+
+```bash
+yarn global add firebase-tools
+```
+
+Login
+
+```bash
+firebase login
+```
+
+Replace `MY_FIREBASE_PROJECT_ID` in the command below with your Firebase project ID.
+
+```bash
+LC_ALL=C find . -type f \( -iname .firebaserc \) -exec sed -i '' s/\<FIREBASE_PROJECT_ID\>/MY_FIREBASE_PROJECT_ID/ {} +
+```
+
+Deploy
+
+```
+cd firebase
+firebase deploy --only functions
+```
+
+Note the `webhook` URL. We'll need it later.
+
 ## Setup [Hasura](https://hasura.io/)
 
 ### Create an Hasura instance on Heroku
 
 Adapting the Hasura [docs](https://docs.hasura.io/1.0/graphql/manual/getting-started/heroku-simple.html), [deploy a Heroku instance with Hasura](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku) setup. Note your `app name`.
 
-### Replace `<APP_NAME>` in this project with your Heroku app name
+### Set the environment variables in Heroku
 
-Replace `MY_APP_NAME` in the command below with your Heroku app name.
+In the [Heroku Dashboard](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard) click `Reveal Config Vars` and add the folowing.
+
+Set the `HASURA_GRAPHQL_AUTH_HOOK` to your webhook URL from Firebase Functions. This is needed for user authentication.
+
+```
+HASURA_GRAPHQL_AUTH_HOOK
+```
+
+Set the admin secret to something you decide. `HASURA_GRAPHQL_AUTH_HOOK` can't be set without `HASURA_GRAPHQL_ADMIN_SECRET`. This secures the admin console and endpoints.
+
+```
+HASURA_GRAPHQL_ADMIN_SECRET=MY_HASURA_SECRET
+```
+
+Disable the console. We can still access it via the Hasura CLI. This is needed to apply the DB migrations.
+
+```
+HASURA_GRAPHQL_ENABLE_CONSOLE=false
+```
+
+### Replace `MY_HASURA_SECRET` for GraphQL codegen
 
 ```bash
-LC_ALL=C find . -type f \( -iname codegen.yml -o -iname config.yaml -o -iname App.tsx \) -exec sed -i '' s/\<APP_NAME\>/MY_APP_NAME/ {} +
+LC_ALL=C find . -type f \( -iname codegen.yml \) -exec sed -i '' s/\<HASURA_SECRET\>/MY_HASURA_SECRET/ {} +
+```
+
+### Replace `<APP_NAME>` in this project with your Heroku app name
+
+Replace `MY_HEROKU_APP_NAME` in the command below with your Heroku app name.
+
+```bash
+LC_ALL=C find . -type f \( -iname codegen.yml -o -iname config.yaml -o -iname apolloClient.tsx \) -exec sed -i '' s/\<HEROKU_APP_NAME\>/MY_HEROKU_APP_NAME/ {} +
 ```
 
 ### Initialize the database
 
 Adapting commands from [Hasura migration docs](https://docs.hasura.io/1.0/graphql/manual/migrations/new-database.html)
-
-Set `HASURA_GRAPHQL_ENABLE_CONSOLE=false` enviornment variable in the [Heroku Dashboard](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard).
 
 Install the hasura client
 https://docs.hasura.io/1.0/graphql/manual/hasura-cli/install-hasura-cli.html#install-hasura-cli
@@ -60,16 +149,16 @@ Apply migrations
 
 ```bash
 cd hasura
-hasura migrate apply --version "1560790778833"
+hasura migrate apply
 ```
 
 ## View Hasura Console
 
-Hasura console provides admin views for all postgres tables and a GraphQL playground to demo queries on.
+Hasura console provides admin views for all postgres tables and a GraphQL playground to demo queries.
 
 ```bash
 cd hasura
-hasura console
+hasura console --admin-secret MY_HASURA_SECRET
 ```
 
 ## Run
@@ -123,3 +212,6 @@ killall node
 - [Apollo Client](https://www.apollographql.com/docs/react/)
 - [GraphQL Codegen](https://graphql-code-generator.com/docs/getting-started/)
 - [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
+- [Firebase Authentication](https://firebase.google.com/docs/auth)
+- [Firebase Functions](https://firebase.google.com/docs/functions)
+- [dotenv](https://github.com/motdotla/dotenv)

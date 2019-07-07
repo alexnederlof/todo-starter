@@ -421,6 +421,7 @@ export type Todos = {
   complete: Scalars["Boolean"];
   id: Scalars["Int"];
   name: Scalars["String"];
+  uid: Scalars["String"];
 };
 
 /** aggregated selection of "todos" */
@@ -492,12 +493,15 @@ export type Todos_Bool_Exp = {
   complete?: Maybe<Boolean_Comparison_Exp>;
   id?: Maybe<Integer_Comparison_Exp>;
   name?: Maybe<Text_Comparison_Exp>;
+  uid?: Maybe<Varchar_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "todos" */
 export enum Todos_Constraint {
   /** unique or primary key constraint */
-  TodosPkey = "todos_pkey"
+  TodosPkey = "todos_pkey",
+  /** unique or primary key constraint */
+  TodosUidKey = "todos_uid_key"
 }
 
 /** input type for incrementing integer columne in table "todos" */
@@ -510,6 +514,7 @@ export type Todos_Insert_Input = {
   complete?: Maybe<Scalars["Boolean"]>;
   id?: Maybe<Scalars["Int"]>;
   name?: Maybe<Scalars["String"]>;
+  uid?: Maybe<Scalars["String"]>;
 };
 
 /** aggregate max on columns */
@@ -517,12 +522,14 @@ export type Todos_Max_Fields = {
   __typename?: "todos_max_fields";
   id?: Maybe<Scalars["Int"]>;
   name?: Maybe<Scalars["String"]>;
+  uid?: Maybe<Scalars["String"]>;
 };
 
 /** order by max() on columns of table "todos" */
 export type Todos_Max_Order_By = {
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  uid?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -530,12 +537,14 @@ export type Todos_Min_Fields = {
   __typename?: "todos_min_fields";
   id?: Maybe<Scalars["Int"]>;
   name?: Maybe<Scalars["String"]>;
+  uid?: Maybe<Scalars["String"]>;
 };
 
 /** order by min() on columns of table "todos" */
 export type Todos_Min_Order_By = {
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  uid?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "todos" */
@@ -564,6 +573,7 @@ export type Todos_Order_By = {
   complete?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  uid?: Maybe<Order_By>;
 };
 
 /** select columns of table "todos" */
@@ -573,7 +583,9 @@ export enum Todos_Select_Column {
   /** column name */
   Id = "id",
   /** column name */
-  Name = "name"
+  Name = "name",
+  /** column name */
+  Uid = "uid"
 }
 
 /** input type for updating data in table "todos" */
@@ -581,6 +593,7 @@ export type Todos_Set_Input = {
   complete?: Maybe<Scalars["Boolean"]>;
   id?: Maybe<Scalars["Int"]>;
   name?: Maybe<Scalars["String"]>;
+  uid?: Maybe<Scalars["String"]>;
 };
 
 /** aggregate stddev on columns */
@@ -634,7 +647,9 @@ export enum Todos_Update_Column {
   /** column name */
   Id = "id",
   /** column name */
-  Name = "name"
+  Name = "name",
+  /** column name */
+  Uid = "uid"
 }
 
 /** aggregate var_pop on columns */
@@ -668,4 +683,23 @@ export type Todos_Variance_Fields = {
 /** order by variance() on columns of table "todos" */
 export type Todos_Variance_Order_By = {
   id?: Maybe<Order_By>;
+};
+
+/** expression to compare columns of type varchar. All fields are combined with logical 'AND'. */
+export type Varchar_Comparison_Exp = {
+  _eq?: Maybe<Scalars["String"]>;
+  _gt?: Maybe<Scalars["String"]>;
+  _gte?: Maybe<Scalars["String"]>;
+  _ilike?: Maybe<Scalars["String"]>;
+  _in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  _is_null?: Maybe<Scalars["Boolean"]>;
+  _like?: Maybe<Scalars["String"]>;
+  _lt?: Maybe<Scalars["String"]>;
+  _lte?: Maybe<Scalars["String"]>;
+  _neq?: Maybe<Scalars["String"]>;
+  _nilike?: Maybe<Scalars["String"]>;
+  _nin?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  _nlike?: Maybe<Scalars["String"]>;
+  _nsimilar?: Maybe<Scalars["String"]>;
+  _similar?: Maybe<Scalars["String"]>;
 };

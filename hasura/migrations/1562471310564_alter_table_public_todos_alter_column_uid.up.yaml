@@ -1,0 +1,9 @@
+- args:
+    sql: ALTER TABLE "public"."todos" ALTER COLUMN "uid" TYPE varchar;
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."todos" DROP CONSTRAINT "todos_uid_key"
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."todos"."uid" IS ''
+  type: run_sql

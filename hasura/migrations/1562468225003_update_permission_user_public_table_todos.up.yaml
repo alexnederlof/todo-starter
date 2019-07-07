@@ -1,0 +1,14 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - name
+      - complete
+      filter: {}
+      limit: null
+    role: user
+    table:
+      name: todos
+      schema: public
+  type: create_select_permission

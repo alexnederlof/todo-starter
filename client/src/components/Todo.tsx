@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  todo: Todos;
+  todo: Pick<Todos, "name" | "id" | "complete">;
 }
 
 export default function Todo({ todo }: Props) {

@@ -1,5 +1,4 @@
 import React from "react";
-import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
@@ -9,9 +8,9 @@ import Header from "./components/Header";
 import { Page } from "./constants";
 import About from "./containers/About";
 
-export const client = new ApolloClient({
-  uri: "https://<APP_NAME>.herokuapp.com/v1/graphql"
-});
+import PrivateRoute from "./components/PrivateRoute";
+import SignIn from "./containers/SignIn";
+import { client } from "./utils/apolloClient";
 
 const useStyles = makeStyles({
   root: {
@@ -31,7 +30,8 @@ export default function App() {
       <Router>
         <div className={classes.root}>
           <Header />
-          <Route exact path="/" component={Todos} />
+          <PrivateRoute exact path="/" component={Todos} />
+          <Route path={`/${Page.signIn}`} component={SignIn} />
           <Route path={`/${Page.about}`} component={About} />
         </div>
       </Router>

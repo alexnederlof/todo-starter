@@ -1,3 +1,4 @@
 export enum Page {
-  about = "about"
+  about = "about",
+  signIn = "sign-in"
 }
