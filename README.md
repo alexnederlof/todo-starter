@@ -94,7 +94,7 @@ cd firebase
 firebase deploy --only functions
 ```
 
-Note the `webhook` URL. We'll need it later.
+Note the webhook URL (`MY_WEBHOOK_URL`). We'll need it later.
 
 ## Setup [Hasura](https://hasura.io/)
 
@@ -106,10 +106,12 @@ Adapting the Hasura [docs](https://docs.hasura.io/1.0/graphql/manual/getting-sta
 
 In the [Heroku Dashboard](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard) click `Reveal Config Vars` and add the folowing.
 
+![Heroku Config Vars](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/hasura-firebase-auth/assets/herokuConfigVars.png)
+
 Set the `HASURA_GRAPHQL_AUTH_HOOK` to your webhook URL from Firebase Functions. This is needed for user authentication.
 
 ```
-HASURA_GRAPHQL_AUTH_HOOK
+HASURA_GRAPHQL_AUTH_HOOK=MY_WEBHOOK_URL
 ```
 
 Set the admin secret to something you decide. `HASURA_GRAPHQL_AUTH_HOOK` can't be set without `HASURA_GRAPHQL_ADMIN_SECRET`. This secures the admin console and endpoints.
@@ -142,8 +144,7 @@ LC_ALL=C find . -type f \( -iname codegen.yml -o -iname config.yaml -o -iname ap
 
 Adapting commands from [Hasura migration docs](https://docs.hasura.io/1.0/graphql/manual/migrations/new-database.html)
 
-Install the hasura client
-https://docs.hasura.io/1.0/graphql/manual/hasura-cli/install-hasura-cli.html#install-hasura-cli
+Install the [hasura client](https://docs.hasura.io/1.0/graphql/manual/hasura-cli/install-hasura-cli.html#install-hasura-cli)
 
 Apply migrations
 
