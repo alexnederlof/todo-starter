@@ -37,7 +37,7 @@ yarn install
 
 ### Create an Hasura instance on Heroku
 
-Adapting the Hasura [docs](https://docs.hasura.io/1.0/graphql/manual/getting-started/heroku-simple.html), [deploy a Heroku instance with Hasura](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku) setup. Note your `app name`.
+[Deploy a Heroku instance with Hasura](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku). Note your `app name`.
 
 ### Replace `<APP_NAME>` in this project with your Heroku app name
 
@@ -51,8 +51,6 @@ LC_ALL=C find . -type f \( -iname codegen.yml -o -iname config.yaml -o -iname Ap
 
 Adapting commands from [Hasura migration docs](https://docs.hasura.io/1.0/graphql/manual/migrations/new-database.html)
 
-Set `HASURA_GRAPHQL_ENABLE_CONSOLE=false` enviornment variable in the [Heroku Dashboard](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard).
-
 Install the hasura client
 https://docs.hasura.io/1.0/graphql/manual/hasura-cli/install-hasura-cli.html#install-hasura-cli
 
@@ -60,17 +58,14 @@ Apply migrations
 
 ```bash
 cd hasura
-hasura migrate apply --version "1560790778833"
+hasura migrate apply
 ```
 
 ## View Hasura Console
 
-Hasura console provides admin views for all postgres tables and a GraphQL playground to demo queries on.
+Hasura console provides admin views for all postgres tables and a GraphQL playground to demo queries.
 
-```bash
-cd hasura
-hasura console
-```
+https://MY_HEROKU_APP_NAME.herokuapp.com/console
 
 ## Run
 
