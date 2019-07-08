@@ -499,9 +499,7 @@ export type Todos_Bool_Exp = {
 /** unique or primary key constraints on table "todos" */
 export enum Todos_Constraint {
   /** unique or primary key constraint */
-  TodosPkey = "todos_pkey",
-  /** unique or primary key constraint */
-  TodosUidKey = "todos_uid_key"
+  TodosPkey = "todos_pkey"
 }
 
 /** input type for incrementing integer columne in table "todos" */

@@ -107,7 +107,7 @@ Adapting the Hasura [docs](https://docs.hasura.io/1.0/graphql/manual/getting-sta
 Replace `MY_HEROKU_APP_NAME` in the command below with your Heroku app name.
 
 ```bash
-LC_ALL=C find . -type f \( -iname codegen.yml -o -iname config.yaml -o -iname apolloClient.tsx \) -exec sed -i '' s/\<HEROKU_APP_NAME\>/MY_HEROKU_APP_NAME/ {} +
+LC_ALL=C find . -type f \( -iname codegen.yml -o -iname config.yaml -o -iname apolloClient.ts \) -exec sed -i '' s/\<HEROKU_APP_NAME\>/MY_HEROKU_APP_NAME/ {} +
 ```
 
 ### Initialize the database
