@@ -102,6 +102,27 @@ Note the "Function URL (webhook)" (`MY_WEBHOOK_URL`). We'll need it later.
 
 Adapting the Hasura [docs](https://docs.hasura.io/1.0/graphql/manual/getting-started/heroku-simple.html), [deploy a Heroku instance with Hasura](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku) setup. Note your app name (`MY_APP_NAME`).
 
+### Replace `<APP_NAME>` in this project with your Heroku app name
+
+Replace `MY_HEROKU_APP_NAME` in the command below with your Heroku app name.
+
+```bash
+LC_ALL=C find . -type f \( -iname codegen.yml -o -iname config.yaml -o -iname apolloClient.tsx \) -exec sed -i '' s/\<HEROKU_APP_NAME\>/MY_HEROKU_APP_NAME/ {} +
+```
+
+### Initialize the database
+
+Adapting commands from [Hasura migration docs](https://docs.hasura.io/1.0/graphql/manual/migrations/new-database.html)
+
+Install the [hasura client](https://docs.hasura.io/1.0/graphql/manual/hasura-cli/install-hasura-cli.html#install-hasura-cli)
+
+Apply migrations
+
+```bash
+cd hasura
+hasura migrate apply
+```
+
 ### Set the environment variables in Heroku
 
 In the [Heroku Dashboard](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard) under "Settings" click "Reveal Config Vars" and add the folowing.
@@ -126,27 +147,6 @@ Replace `MY_HASURA_SECRET` in the command below with your Hasura secret.
 
 ```bash
 LC_ALL=C find . -type f \( -iname codegen.yml \) -exec sed -i '' s/\<HASURA_SECRET\>/MY_HASURA_SECRET/ {} +
-```
-
-### Replace `<APP_NAME>` in this project with your Heroku app name
-
-Replace `MY_HEROKU_APP_NAME` in the command below with your Heroku app name.
-
-```bash
-LC_ALL=C find . -type f \( -iname codegen.yml -o -iname config.yaml -o -iname apolloClient.tsx \) -exec sed -i '' s/\<HEROKU_APP_NAME\>/MY_HEROKU_APP_NAME/ {} +
-```
-
-### Initialize the database
-
-Adapting commands from [Hasura migration docs](https://docs.hasura.io/1.0/graphql/manual/migrations/new-database.html)
-
-Install the [hasura client](https://docs.hasura.io/1.0/graphql/manual/hasura-cli/install-hasura-cli.html#install-hasura-cli)
-
-Apply migrations
-
-```bash
-cd hasura
-hasura migrate apply --admin-secret MY_HASURA_SECRET
 ```
 
 ## View Hasura Console
