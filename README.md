@@ -155,6 +155,10 @@ Hasura console provides admin views for all postgres tables and a GraphQL playgr
 
 https://MY_HEROKU_APP_NAME.herokuapp.com/console
 
+To view the schema and make queries in GraphiQL set the `x-hasura-admin-secret`.
+
+![Hasura GraphiQL](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/hasura-firebase-auth/assets/hasuraGraphiQL.png)
+
 ## Run
 
 ```bash
