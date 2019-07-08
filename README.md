@@ -22,7 +22,8 @@ brew install yarn
 
 ```bash
 git clone https://github.com/tiagob/ts-react-apollo-node.git
-cd ts-react-apollo-node
+cd todo-starter
+git checkout hasura-firebase-auth
 ```
 
 **All commands below are run from the root project directory `ts-react-apollo-node`.**
