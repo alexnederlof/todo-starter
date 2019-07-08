@@ -62,15 +62,15 @@ yarn sync-db
 
 Complete the `CONFIGURE A PROJECT` flow on the [Google Auth docs](https://developers.google.com/identity/sign-in/web/sign-in).
 
-![Configure a Project](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/google-auth/ReadmeImages/configureAProject.png)
+![Configure a Project](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/google-auth/assets/configureAProject.png)
 
 Configure OAuth Client by selecting `Web browser` and adding `http://localhost:3000` to the authorized Javascript origin.
 
-![Configure OAuth Client](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/google-auth/ReadmeImages/configureOAuthClient.png)
+![Configure OAuth Client](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/google-auth/assets/configureOAuthClient.png)
 
 Copy your generated Client ID.
 
-![Copy Client ID](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/google-auth/ReadmeImages/copyClientId.png)
+![Copy Client ID](https://raw.githubusercontent.com/tiagob/ts-react-apollo-node/google-auth/assets/copyClientId.png)
 
 ### Add Client ID to `client/.env`
 
