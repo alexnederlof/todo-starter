@@ -100,7 +100,7 @@ Note the "Function URL (webhook)" (`MY_WEBHOOK_URL`). We'll need it later.
 
 ### Create an Hasura instance on Heroku
 
-Adapting the Hasura [docs](https://docs.hasura.io/1.0/graphql/manual/getting-started/heroku-simple.html), [deploy a Heroku instance with Hasura](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku) setup. Note your app name (`MY_APP_NAME`).
+[Deploy a Heroku instance with Hasura](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku). Note your app name (`MY_APP_NAME`).
 
 ### Replace `<APP_NAME>` in this project with your Heroku app name
 
