@@ -10,9 +10,10 @@
     "common": "0.1.0",
     "graphql": "^14.3.1",
     "graphql-tag": "^2.10.1",
-    "react": "^16.8.6",
+    "react": "16.8.3",
     "react-apollo": "^2.5.8",
-    "react-dom": "^16.8.6",
+    "react-apollo-hooks": "^0.5.0",
+    "react-dom": "16.8.3",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "typescript": "3.4.5"
