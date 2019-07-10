@@ -7,7 +7,7 @@ import {
   IconButton
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Todo as TodoType } from "../generated/graphql";
+import { Todo as TodoType } from "common";
 import { makeStyles } from "@material-ui/styles";
 import { useUpdateTodoMutation, useDestroyTodoMutation } from "common";
 

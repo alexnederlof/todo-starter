@@ -29,12 +29,9 @@
     "sync-db": "tsc && node ./build/index.js --sync-db",
     "sync-db-debug": "tsc && node --inspect-brk ./build/index.js --sync-db",
     "watch-node": "nodemon ./build/index.js",
-    "watch": "concurrently -k -p \"[{name}]\" -n \"Generate,TypeScript,Node\" -c \"magenta.bold,green.bold,cyan.bold\" \"yarn generate\" \"yarn watch-ts\" \"yarn watch-node\"",
     "watch-ts": "tsc -w -p .",
     "serve-debug": "nodemon --inspect ./build/index.js",
-    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Generate,TypeScript,Node\" -c \"magenta.bold,green.bold,cyan.bold\" \"yarn generate\" \"yarn watch-ts\" \"yarn serve-debug\"",
-    "mysqldump-dev": "mysqldump todo -uroot --hex-blob --default-character-set=utf8mb4 >~/Desktop/todo-$(date +%F).sql",
-    "generate": "graphql-codegen --config codegen.yml --watch"
+    "mysqldump-dev": "mysqldump todo -uroot --hex-blob --default-character-set=utf8mb4 >~/Desktop/todo-$(date +%F).sql"
   },
   "husky": {
     "hooks": {

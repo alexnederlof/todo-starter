@@ -5,5 +5,18 @@
     "web",
     "server",
     "common"
-  ]
+  ],
+  "scripts": {
+    "generate": "graphql-codegen --watch",
+    "watch-web": "concurrently -k -p \"[{name}]\" -n \"Generate,Build Common,Start\" -c \"magenta.bold,green.bold,cyan.bold\" \"yarn generate\" \"yarn --cwd common/ watch\" \"yarn --cwd web/ start\"",
+    "watch-app": "concurrently -k -p \"[{name}]\" -n \"Generate,Build Common,Start\" -c \"magenta.bold,green.bold,cyan.bold\" \"yarn generate\" \"yarn --cwd common/ watch\" \"yarn --cwd app/ start\"",
+    "watch-server": "concurrently -k -p \"[{name}]\" -n \"Generate,TypeScript,Node\" -c \"magenta.bold,green.bold,cyan.bold\" \"yarn generate\" \"yarn --cwd server/ watch-ts\" \"yarn --cwd server/ watch-node\"",
+    "watch-server-debug": "concurrently -k -p \"[{name}]\" -n \"Generate,TypeScript,Node\" -c \"magenta.bold,green.bold,cyan.bold\" \"yarn generate\" \"yarn --cwd server/ watch-ts\" \"yarn --cwd server/ serve-debug\""
+  },
+  "devDependencies": {
+    "@graphql-codegen/typescript": "^1.3.1",
+    "@graphql-codegen/typescript-operations": "^1.3.1",
+    "@graphql-codegen/typescript-react-apollo": "^1.3.1",
+    "concurrently": "^4.1.1"
+  }
 }

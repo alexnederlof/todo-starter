@@ -1,7 +1,10 @@
-schema: "../server/src/schema.ts"
-documents: "**/*.graphql"
+schema: "server/src/schema.ts"
+documents: "{,!(node_modules)/**/}*.graphql"
 generates:
-  src/generated/graphql.ts:
+  server/src/generated/graphql.d.ts:
+    plugins:
+      - "typescript"
+  common/src/generated/graphql.ts:
     plugins:
       - "typescript-react-apollo"
       - "typescript-operations"
