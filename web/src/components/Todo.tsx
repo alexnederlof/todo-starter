@@ -7,15 +7,9 @@ import {
   IconButton
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import {
-  Todo as TodoType,
-  UpdateTodoComponent,
-  TodosQuery,
-  TodosQueryVariables,
-  TodosDocument,
-  DestroyTodoComponent
-} from "../generated/graphql";
+import { Todo as TodoType } from "../generated/graphql";
 import { makeStyles } from "@material-ui/styles";
+// import { useUpdateTodoMutation, useDestroyTodoMutation } from "common";
 
 const useStyles = makeStyles({
   complete: {
@@ -29,77 +23,32 @@ interface Props {
 
 export default function Todo({ todo }: Props) {
   const classes = useStyles();
+  // const updateTodo = useUpdateTodoMutation();
+  // const destroyTodo = useDestroyTodoMutation();
+
   return (
-    <UpdateTodoComponent
-      update={(cache, { data }) => {
-        if (!data) {
-          return;
-        }
-        const updateTodo = data.updateTodo;
-        const query = cache.readQuery<TodosQuery, TodosQueryVariables>({
-          query: TodosDocument
-        });
-        if (query) {
-          const { todos } = query;
-          cache.writeQuery<TodosQuery, TodosQueryVariables>({
-            query: TodosDocument,
-            data: {
-              todos: todos.map(todo =>
-                todo.id === updateTodo.id ? updateTodo : todo
-              )
-            }
-          });
-        }
-      }}
+    <ListItem
+      key={todo.id}
+      role={undefined}
+      dense
+      button
+      // onClick={() =>
+      // updateTodo({ variables: { id: todo.id, complete: !todo.complete } })
+      // }
     >
-      {updateTodo => (
-        <ListItem
-          key={todo.id}
-          role={undefined}
-          dense
-          button
-          onClick={() =>
-            updateTodo({ variables: { id: todo.id, complete: !todo.complete } })
-          }
+      <Checkbox checked={todo.complete} tabIndex={-1} disableRipple />
+      <ListItemText
+        primary={todo.name}
+        classes={todo.complete ? { primary: classes.complete } : undefined}
+      />
+      <ListItemSecondaryAction>
+        <IconButton
+          aria-label="Delete"
+          // onClick={() => destroyTodo({ variables: { id: todo.id } })}
         >
-          <Checkbox checked={todo.complete} tabIndex={-1} disableRipple />
-          <ListItemText
-            primary={todo.name}
-            classes={todo.complete ? { primary: classes.complete } : undefined}
-          />
-          <ListItemSecondaryAction>
-            <DestroyTodoComponent
-              update={(cache, { data }) => {
-                if (!data) {
-                  return;
-                }
-                const destroyTodo = data.destroyTodo;
-                const query = cache.readQuery<TodosQuery, TodosQueryVariables>({
-                  query: TodosDocument
-                });
-                if (query) {
-                  const { todos } = query;
-                  cache.writeQuery<TodosQuery, TodosQueryVariables>({
-                    query: TodosDocument,
-                    data: {
-                      todos: todos.filter(todo => todo.id !== destroyTodo.id)
-                    }
-                  });
-                }
-              }}
-            >
-              {destroyTodo => (
-                <IconButton
-                  aria-label="Delete"
-                  onClick={() => destroyTodo({ variables: { id: todo.id } })}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              )}
-            </DestroyTodoComponent>
-          </ListItemSecondaryAction>
-        </ListItem>
-      )}
-    </UpdateTodoComponent>
+          <DeleteIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
   );
 }

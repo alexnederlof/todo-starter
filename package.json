@@ -3,6 +3,7 @@
   "workspaces": [
     "app",
     "web",
-    "server"
+    "server",
+    "common"
   ]
 }

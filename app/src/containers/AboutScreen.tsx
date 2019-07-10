@@ -19,7 +19,7 @@ export default function AboutScreen({ navigation }: NavigationScreenProps) {
     <Container>
       <Header>
         <Left>
-          <Button transparent onPress={() => navigation.push("Todos")}>
+          <Button transparent onPress={() => navigation.push("Todo")}>
             <Icon name="arrow-back" />
           </Button>
         </Left>

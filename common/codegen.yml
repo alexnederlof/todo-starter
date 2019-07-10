@@ -1,0 +1,12 @@
+schema: "../server/src/schema.ts"
+documents: "**/*.graphql"
+generates:
+  src/generated/graphql.ts:
+    plugins:
+      - "typescript-react-apollo"
+      - "typescript-operations"
+      - "typescript"
+    config:
+      withHOC: false
+      withComponent: false
+      withHooks: true

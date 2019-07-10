@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "0.1.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "__generated__/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "watch": "concurrently -k -p \"[{name}]\" -n \"Generate,Start\" -c \"magenta.bold,cyan.bold\" \"yarn generate\" \"yarn start\"",
@@ -9,11 +9,13 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "generate": "graphql-codegen --config codegen.yml --watch"
+    "generate": "graphql-codegen --config codegen.yml --watch",
+    "postinstall": "expo-yarn-workspaces postinstall"
   },
   "dependencies": {
     "apollo-boost": "^0.4.3",
     "apollo-client": "^2.6.3",
+    "common": "0.1.0",
     "expo": "^33.0.0",
     "expo-constants": "^5.0.1",
     "native-base": "^2.12.1",
@@ -32,12 +34,8 @@
     "@types/react-native": "^0.57.60",
     "babel-preset-expo": "^5.1.1",
     "concurrently": "^4.1.1",
+    "expo-yarn-workspaces": "^1.2.0",
     "typescript": "^3.4.5"
   },
-  "private": true,
-  "workspaces": {
-    "nohoist": [
-      "**"
-    ]
-  }
+  "private": true
 }

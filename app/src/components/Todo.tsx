@@ -16,91 +16,46 @@ import {
   Icon,
   CheckBox
 } from "native-base";
+import useUpdateTodoMutation from "common/src/useUpdateTodoMutation";
+import useDestroyTodoMutation from "common/src/useDestroyTodoMutation";
 
 interface Props {
   todo: TodoType;
 }
 
 export default function Todo({ todo }: Props) {
+  const updateTodo = useUpdateTodoMutation();
+  const destroyTodo = useDestroyTodoMutation();
+
   return (
-    <UpdateTodoComponent
-      update={(cache, { data }) => {
-        if (!data) {
-          return;
-        }
-        const updateTodo = data.updateTodo;
-        const query = cache.readQuery<TodosQuery, TodosQueryVariables>({
-          query: TodosDocument
-        });
-        if (query) {
-          const { todos } = query;
-          cache.writeQuery<TodosQuery, TodosQueryVariables>({
-            query: TodosDocument,
-            data: {
-              todos: todos.map(todo =>
-                todo.id === updateTodo.id ? updateTodo : todo
-              )
-            }
-          });
-        }
-      }}
-    >
-      {updateTodo => (
-        <ListItem>
-          <Left>
-            <CheckBox
-              onPress={() =>
-                updateTodo({
-                  variables: { id: todo.id, complete: !todo.complete }
-                })
-              }
-              checked={todo.complete}
-              style={{ marginRight: 40 }}
-            />
-            <Text
-              style={
-                todo.complete
-                  ? {
-                      textDecorationLine: "line-through"
-                    }
-                  : undefined
-              }
-            >
-              {todo.name}
-            </Text>
-          </Left>
-          <Right>
-            <DestroyTodoComponent
-              update={(cache, { data }) => {
-                if (!data) {
-                  return;
+    <ListItem>
+      <Left>
+        <CheckBox
+          onPress={() =>
+            updateTodo({
+              variables: { id: todo.id, complete: !todo.complete }
+            })
+          }
+          checked={todo.complete}
+          style={{ marginRight: 40 }}
+        />
+        <Text
+          style={
+            todo.complete
+              ? {
+                  textDecorationLine: "line-through"
                 }
-                const destroyTodo = data.destroyTodo;
-                const query = cache.readQuery<TodosQuery, TodosQueryVariables>({
-                  query: TodosDocument
-                });
-                if (query) {
-                  const { todos } = query;
-                  cache.writeQuery<TodosQuery, TodosQueryVariables>({
-                    query: TodosDocument,
-                    data: {
-                      todos: todos.filter(todo => todo.id !== destroyTodo.id)
-                    }
-                  });
-                }
-              }}
-            >
-              {destroyTodo => (
-                <Button
-                  onPress={() => destroyTodo({ variables: { id: todo.id } })}
-                >
-                  <Icon active name="trash" />
-                </Button>
-              )}
-            </DestroyTodoComponent>
-          </Right>
-        </ListItem>
-      )}
-    </UpdateTodoComponent>
+              : undefined
+          }
+        >
+          {todo.name}
+        </Text>
+      </Left>
+      <Right>
+        <Button onPress={() => destroyTodo({ variables: { id: todo.id } })}>
+          <Icon active name="trash" />
+        </Button>
+      </Right>
+    </ListItem>
   );
 }
