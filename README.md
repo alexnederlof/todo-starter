@@ -1,6 +1,6 @@
 # Full-stack todo starter app
 
-TypeScript with React, Apollo and Node example
+TypeScript with React, Expo, Apollo and Node example
 
 ## Setup
 
@@ -42,6 +42,12 @@ cd todo-starter
 
 **All commands below are run from the root project directory `todo-starter`.**
 
+### Install [Expo](https://docs.expo.io)
+
+```bash
+yarn global add expo-cli
+```
+
 ### Install dependencies
 
 ```bash
@@ -60,20 +66,24 @@ yarn sync-db
 
 ## Run
 
-Create two bash terminals (terminal 1, terminal 2). `cd` into the root of the cloned repo in both.
+### Server
 
-In terminal 1
+**Must be running for Website or App to write and read from DB**
 
 ```bash
-cd server
-yarn watch
+yarn watch-server
 ```
 
-In terminal 2
+### Web
 
 ```bash
-cd client
-yarn watch
+yarn watch-web
+```
+
+### App
+
+```bash
+yarn watch-app
 ```
 
 ## Setup [VSCode](https://code.visualstudio.com/) (recommended IDE/Editor)
@@ -87,13 +97,12 @@ The config files (`.vscode/`) are included which formats on save and automatical
 - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
 - [GraphQL for VSCode](https://marketplace.visualstudio.com/items?itemName=kumar-harsh.graphql-for-vscode)
 
-### Debug client
+### Debug web
 
 Run `watch` from [VSCode terminal](https://code.visualstudio.com/docs/editor/integrated-terminal).
 
 ```bash
-cd client
-yarn watch
+yarn watch-web
 ```
 
 Press `F5` or click the green debug icon for `Chrome` [launch configuration](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) to attach.
@@ -103,13 +112,12 @@ Press `F5` or click the green debug icon for `Chrome` [launch configuration](htt
 Run `watch-debug` from [VSCode terminal](https://code.visualstudio.com/docs/editor/integrated-terminal). Debugger automattically attaches. See [debugging in VSCode](https://code.visualstudio.com/docs/editor/debugging).
 
 ```bash
-cd server
-yarn watch-debug
+yarn watch-server-debug
 ```
 
 ## Code generation
 
-Repo uses [graphql-code-generator](https://graphql-code-generator.com/). Client React components for GraphQL queries and mutations are automatically generated via the [typescript-react-apollo plugin](https://graphql-code-generator.com/docs/plugins/typescript-react-apollo#usage) from the `*.graphql` files. Server relies on type generation via the [typescript plugin](https://graphql-code-generator.com/docs/plugins/typescript). This code is automattically generated when running `yarn watch` for client and server. It lives in the `/src/generated` folder in both `/client` and `/server`.
+Repo uses [graphql-code-generator](https://graphql-code-generator.com/). Client React components for GraphQL queries and mutations are automatically generated via the [typescript-react-apollo plugin](https://graphql-code-generator.com/docs/plugins/typescript-react-apollo#usage) from the `*.graphql` files. Server relies on type generation via the [typescript plugin](https://graphql-code-generator.com/docs/plugins/typescript). This code is automattically generated when running commands from the workspace root.
 
 ## Gotchas
 
@@ -121,10 +129,20 @@ Kill all node processes.
 killall node
 ```
 
+### Hooks can only be called inside the body of a function component
+
+React in both `app/package.json` and `web/package.json` need to be the same version since they're shared in Yarn Workspaces (unless you add [nohoist](https://yarnpkg.com/blog/2018/02/15/nohoist/)).
+
+### Yarn Workspaces with Expo
+
+Using [expo-yarn-workspaces](https://www.npmjs.com/package/expo-yarn-workspaces) which provides a workaround to make Yarn Workspaces work with Expo. We need Yarn Workspaces to share code between `web/` and `app/`.
+
 ## References
 
 - [TypesScript](https://www.typescriptlang.org/)
 - [React](https://reactjs.org/)
+- [React Native](https://facebook.github.io/react-native/)
+- [Expo](https://docs.expo.io)
 - [Apollo Client](https://www.apollographql.com/docs/react/)
 - [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
 - [GraphQL Codegen](https://graphql-code-generator.com/docs/getting-started/)
