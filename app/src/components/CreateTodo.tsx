@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Item, Input } from "native-base";
-import useCreateTodoMutation from "common/src/useCreateTodoMutation";
+import { useCreateTodoMutation } from "common";
 
 const styles = {
   root: {
@@ -12,7 +12,7 @@ const styles = {
 
 export default function CreateTodo() {
   const [name, setName] = useState("");
-  const createTodo = useCreateTodoMutation();
+  const [createTodo] = useCreateTodoMutation();
 
   return (
     <Item rounded style={styles.root}>

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
-// import { useCreateTodoMutation } from "common";
+import { useCreateTodoMutation } from "common";
 
 export default function CreateTodo() {
   const [name, setName] = useState("");
-  // const createTodo = useCreateTodoMutation();
+  const [createTodo] = useCreateTodoMutation();
 
   return (
     <TextField
@@ -17,7 +17,7 @@ export default function CreateTodo() {
       onChange={event => setName(event.target.value)}
       onKeyPress={event => {
         if (event.key === "Enter") {
-          // createTodo({ variables: { name } }).then(() => setName(""));
+          createTodo({ variables: { name } }).then(() => setName(""));
         }
       }}
     />

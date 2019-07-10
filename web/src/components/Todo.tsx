@@ -9,7 +9,7 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Todo as TodoType } from "../generated/graphql";
 import { makeStyles } from "@material-ui/styles";
-// import { useUpdateTodoMutation, useDestroyTodoMutation } from "common";
+import { useUpdateTodoMutation, useDestroyTodoMutation } from "common";
 
 const useStyles = makeStyles({
   complete: {
@@ -23,8 +23,8 @@ interface Props {
 
 export default function Todo({ todo }: Props) {
   const classes = useStyles();
-  // const updateTodo = useUpdateTodoMutation();
-  // const destroyTodo = useDestroyTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
+  const [destroyTodo] = useDestroyTodoMutation();
 
   return (
     <ListItem
@@ -32,9 +32,9 @@ export default function Todo({ todo }: Props) {
       role={undefined}
       dense
       button
-      // onClick={() =>
-      // updateTodo({ variables: { id: todo.id, complete: !todo.complete } })
-      // }
+      onClick={() =>
+        updateTodo({ variables: { id: todo.id, complete: !todo.complete } })
+      }
     >
       <Checkbox checked={todo.complete} tabIndex={-1} disableRipple />
       <ListItemText
@@ -44,7 +44,7 @@ export default function Todo({ todo }: Props) {
       <ListItemSecondaryAction>
         <IconButton
           aria-label="Delete"
-          // onClick={() => destroyTodo({ variables: { id: todo.id } })}
+          onClick={() => destroyTodo({ variables: { id: todo.id } })}
         >
           <DeleteIcon />
         </IconButton>

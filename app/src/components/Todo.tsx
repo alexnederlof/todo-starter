@@ -16,16 +16,15 @@ import {
   Icon,
   CheckBox
 } from "native-base";
-import useUpdateTodoMutation from "common/src/useUpdateTodoMutation";
-import useDestroyTodoMutation from "common/src/useDestroyTodoMutation";
+import { useUpdateTodoMutation, useDestroyTodoMutation } from "common";
 
 interface Props {
   todo: TodoType;
 }
 
 export default function Todo({ todo }: Props) {
-  const updateTodo = useUpdateTodoMutation();
-  const destroyTodo = useDestroyTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
+  const [destroyTodo] = useDestroyTodoMutation();
 
   return (
     <ListItem>
