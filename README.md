@@ -2,44 +2,6 @@
 
 TypeScript with React, Apollo and Node example
 
-## Setup
-
-_Assumes MacOS_
-
-### Install [Homebrew](https://brew.sh/)
-
-```bash
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
-
-### Install [MySQL](https://www.mysql.com/)
-
-Install MySQL with Homebrew ([MySQL commands on MacOS](https://gist.github.com/nrollr/3f57fc15ded7dddddcc4e82fe137b58e)).
-
-```bash
-brew install mysql
-brew tap homebrew/services
-```
-
-Start MySQL
-
-```bash
-brew services start mysql
-```
-
-### Install [Yarn](https://yarnpkg.com/)
-
-```bash
-brew install yarn
-```
-
-### Clone repo and cd to root of project
-
-```bash
-git clone https://github.com/tiagob/todo-starter.git
-cd todo-starter
-```
-
 **All commands below are run from the root project directory `todo-starter`.**
 
 ### Install dependencies
