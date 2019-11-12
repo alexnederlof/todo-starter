@@ -57,7 +57,7 @@ jobs:
               working-directory: ./server
               run: yarn generate
             - name: Setup database
-              working-directory: ./client
+              working-directory: ./server
               run: yarn sync-db
               env:
                   CI: true
