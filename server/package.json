@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "apollo-server": "^2.6.3",
-    "commander": "^2.19.0",
+    "commander": "^4.0.1",
     "graphql": "^14.3.1",
     "sequelize": "^5.8.10",
     "typescript": "3.7.2"
@@ -15,12 +15,12 @@
     "@graphql-codegen/typescript": "^1.2.1",
     "@graphql-codegen/typescript-resolvers": "^1.2.1",
     "@types/graphql": "^14.2.1",
-    "concurrently": "^4.1.0",
-    "husky": "^2.4.1",
+    "concurrently": "^5.0.0",
+    "husky": "^3.0.9",
     "nodemon": "^1.19.1",
     "pg": "^7.12.1",
     "prettier": "^1.18.2",
-    "pretty-quick": "^1.11.1",
+    "pretty-quick": "^2.0.1",
     "ts-node": "^8.3.0"
   },
   "scripts": {

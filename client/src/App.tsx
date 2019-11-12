@@ -1,13 +1,13 @@
-import React from "react";
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { makeStyles } from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
-import Todos from "./containers/Todos";
-import Header from "./components/Header";
-import { Page } from "./constants";
-import About from "./containers/About";
+import { makeStyles } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+import ApolloClient from 'apollo-boost';
+import React from 'react';
+import { ApolloProvider } from 'react-apollo';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Header from './components/Header';
+import { Page } from './constants';
+import About from './containers/About';
+import Todos from './containers/Todos';
 
 export const client = new ApolloClient({
   uri: "http://localhost:4000"
