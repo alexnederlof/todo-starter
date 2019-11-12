@@ -18,11 +18,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "watch": "concurrently -k -p \"[{name}]\" -n \"Generate,Start\" -c \"magenta.bold,cyan.bold\" \"yarn generate\" \"yarn start\"",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"Generate,Start\" -c \"magenta.bold,cyan.bold\" \"yarn generate --watch\" \"yarn start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "generate": "graphql-codegen --config codegen.yml --watch"
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,14 +39,6 @@
     "@graphql-codegen/typescript-react-apollo": "^1.2.1",
     "@types/react": "^16.8.20",
     "@types/react-router-dom": "^5.1.2",
-    "concurrently": "^5.0.0",
-    "husky": "^3.0.9",
-    "prettier": "^1.18.2",
-    "pretty-quick": "^2.0.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
+    "concurrently": "^5.0.0"
   }
 }

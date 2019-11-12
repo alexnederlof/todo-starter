@@ -10,6 +10,8 @@ export const sequelize = new Sequelize({
   database: process.env.DB_NAME || 'todo',
   username: process.env.DB_USER || 'todo',
   password: process.env.DB_PASS || 'todo-secret',
+  host: process.env.DB_HOST || 'localhost',
+  port: Number(process.env.DB_PORT || 5432),
   dialect: 'postgres',
 });
 
