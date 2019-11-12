@@ -6,6 +6,6 @@ services:
             - '5432:5432'
         restart: always
         environment:
-            POSTGRES_PASSWORD: develop
-        volumes:
-            - './todo-db.sql:/docker-entrypoint-initdb.d/todo-db.sql:ro'
+            POSTGRES_USER: todo
+            POSTGRES_PASSWORD: todo-secret
+            POSTGRES_DB: todo

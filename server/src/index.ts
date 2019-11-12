@@ -10,9 +10,13 @@ const run = () => {
   if (program.syncDb) {
     sequelize
       .sync({ force: true })
-      .then(() => console.log('Database updated!'))
+      .then(() => {
+        console.log('Database updated!');
+        sequelize.close();
+      })
       .catch((e: Error) => {
         console.error('could not update the database!', e);
+        sequelize.close();
         process.exit(1);
       });
   } else {
