@@ -38,7 +38,7 @@ jobs:
                     POSTGRES_PASSWORD: postgres
                     POSTGRES_DB: postgres
                 volumes:
-                    - './todo-db.sql:/docker-entrypoint-initdb.d/todo-db.sql:ro'
+                    - $GITHUB_WORKSPACE/server/todo-db.sql:/docker-entrypoint-initdb.d/todo-db.sql:ro
                 ports:
                     # will assign a random free host port
                     - 5432/tcp
