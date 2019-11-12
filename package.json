@@ -3,5 +3,19 @@
   "workspaces": [
     "client",
     "server"
-  ]
+  ],
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "overrides": [
+      {
+        "files": "*.css",
+        "options": {
+          "useTabs": false,
+          "tabWidth": 2
+        }
+      }
+    ]
+  }
 }

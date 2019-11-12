@@ -1,26 +1,26 @@
-import React from "react";
+import React from 'react';
 import {
   ListItem,
   Checkbox,
   ListItemText,
   ListItemSecondaryAction,
-  IconButton
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+  IconButton,
+} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import {
   Todo as TodoType,
   UpdateTodoComponent,
   TodosQuery,
   TodosQueryVariables,
   TodosDocument,
-  DestroyTodoComponent
-} from "../generated/graphql";
-import { makeStyles } from "@material-ui/styles";
+  DestroyTodoComponent,
+} from '../generated/graphql';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   complete: {
-    textDecoration: "line-through"
-  }
+    textDecoration: 'line-through',
+  },
 });
 
 interface Props {
@@ -37,17 +37,15 @@ export default function Todo({ todo }: Props) {
         }
         const updateTodo = data.updateTodo;
         const query = cache.readQuery<TodosQuery, TodosQueryVariables>({
-          query: TodosDocument
+          query: TodosDocument,
         });
         if (query) {
           const { todos } = query;
           cache.writeQuery<TodosQuery, TodosQueryVariables>({
             query: TodosDocument,
             data: {
-              todos: todos.map(todo =>
-                todo.id === updateTodo.id ? updateTodo : todo
-              )
-            }
+              todos: todos.map(todo => (todo.id === updateTodo.id ? updateTodo : todo)),
+            },
           });
         }
       }}
@@ -58,9 +56,7 @@ export default function Todo({ todo }: Props) {
           role={undefined}
           dense
           button
-          onClick={() =>
-            updateTodo({ variables: { id: todo.id, complete: !todo.complete } })
-          }
+          onClick={() => updateTodo({ variables: { id: todo.id, complete: !todo.complete } })}
         >
           <Checkbox checked={todo.complete} tabIndex={-1} disableRipple />
           <ListItemText
@@ -75,15 +71,15 @@ export default function Todo({ todo }: Props) {
                 }
                 const destroyTodo = data.destroyTodo;
                 const query = cache.readQuery<TodosQuery, TodosQueryVariables>({
-                  query: TodosDocument
+                  query: TodosDocument,
                 });
                 if (query) {
                   const { todos } = query;
                   cache.writeQuery<TodosQuery, TodosQueryVariables>({
                     query: TodosDocument,
                     data: {
-                      todos: todos.filter(todo => todo.id !== destroyTodo.id)
-                    }
+                      todos: todos.filter(todo => todo.id !== destroyTodo.id),
+                    },
                   });
                 }
               }}

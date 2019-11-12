@@ -10,18 +10,18 @@ import About from './containers/About';
 import Todos from './containers/Todos';
 
 export const client = new ApolloClient({
-  uri: "http://localhost:4000"
+  uri: 'http://localhost:4000',
 });
 
 const useStyles = makeStyles({
   root: {
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: grey[200]
-  }
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: grey[200],
+  },
 });
 
 export default function App() {

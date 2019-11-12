@@ -1,17 +1,16 @@
-import { Todo } from "./models";
+import { Todo } from './models';
 import {
   MutationCreateTodoArgs,
   MutationUpdateTodoArgs,
-  MutationDestroyTodoArgs
-} from "./generated/graphql";
+  MutationDestroyTodoArgs,
+} from './generated/graphql';
 
 export default {
   Query: {
-    todos: () => Todo.findAll({})
+    todos: () => Todo.findAll({}),
   },
   Mutation: {
-    createTodo: (_: any, args: MutationCreateTodoArgs) =>
-      Todo.create({ complete: false, ...args }),
+    createTodo: (_: any, args: MutationCreateTodoArgs) => Todo.create({ complete: false, ...args }),
     updateTodo: async (_: any, { id, ...args }: MutationUpdateTodoArgs) => {
       const todo = await Todo.findOne({ where: { id } });
       if (todo) {
@@ -27,6 +26,6 @@ export default {
       } else {
         return null;
       }
-    }
-  }
+    },
+  },
 };

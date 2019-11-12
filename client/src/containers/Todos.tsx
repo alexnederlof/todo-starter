@@ -1,14 +1,14 @@
-import React from "react";
-import { List, Paper, Theme, makeStyles } from "@material-ui/core";
-import Todo from "../components/Todo";
-import { TodosComponent } from "../generated/graphql";
-import CreateTodo from "../components/CreateTodo";
+import React from 'react';
+import { List, Paper, Theme, makeStyles } from '@material-ui/core';
+import Todo from '../components/Todo';
+import { TodosComponent } from '../generated/graphql';
+import CreateTodo from '../components/CreateTodo';
 
 const useStyles = makeStyles(({ spacing }: Theme) => ({
   root: {
     padding: spacing(1),
-    width: "80%"
-  }
+    width: '80%',
+  },
 }));
 
 export default function Todos() {

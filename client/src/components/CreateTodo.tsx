@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { TextField } from "@material-ui/core";
+import React, { useState } from 'react';
+import { TextField } from '@material-ui/core';
 import {
   CreateTodoComponent,
   TodosQuery,
   TodosDocument,
-  TodosQueryVariables
-} from "../generated/graphql";
+  TodosQueryVariables,
+} from '../generated/graphql';
 
 export default function CreateTodo() {
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
 
   return (
     <CreateTodoComponent
@@ -18,13 +18,13 @@ export default function CreateTodo() {
         }
         const createTodo = data.createTodo;
         const query = cache.readQuery<TodosQuery, TodosQueryVariables>({
-          query: TodosDocument
+          query: TodosDocument,
         });
         if (query) {
           const { todos } = query;
           cache.writeQuery<TodosQuery, TodosQueryVariables>({
             query: TodosDocument,
-            data: { todos: todos.concat([createTodo]) }
+            data: { todos: todos.concat([createTodo]) },
           });
         }
       }}
@@ -39,8 +39,8 @@ export default function CreateTodo() {
           value={name}
           onChange={event => setName(event.target.value)}
           onKeyPress={event => {
-            if (event.key === "Enter") {
-              createTodo({ variables: { name } }).then(() => setName(""));
+            if (event.key === 'Enter') {
+              createTodo({ variables: { name } }).then(() => setName(''));
             }
           }}
         />

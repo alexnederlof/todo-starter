@@ -1,11 +1,11 @@
-import { ApolloServer } from "apollo-server";
-import program from "commander";
+import { ApolloServer } from 'apollo-server';
+import program from 'commander';
 
-import resolvers from "./resolvers";
-import typeDefs from "./schema";
-import { sequelize } from "./models";
+import resolvers from './resolvers';
+import typeDefs from './schema';
+import { sequelize } from './models';
 
-program.option("-s, --sync-db", "Sync database").parse(process.argv);
+program.option('-s, --sync-db', 'Sync database').parse(process.argv);
 
 const run = () => {
   if (program.syncDb) {
