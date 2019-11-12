@@ -1,15 +1,20 @@
 import { ApolloServer } from 'apollo-server';
 import program from 'commander';
-
+import { sequelize } from './models';
 import resolvers from './resolvers';
 import typeDefs from './schema';
-import { sequelize } from './models';
 
 program.option('-s, --sync-db', 'Sync database').parse(process.argv);
 
 const run = () => {
   if (program.syncDb) {
-    sequelize.sync({ force: true });
+    sequelize
+      .sync({ force: true })
+      .then(() => console.log('Database updated!'))
+      .catch((e: Error) => {
+        console.error('could not update the database!', e);
+        process.exit(1);
+      });
   } else {
     // Type definitions define the "shape" of your data and specify
     // which ways the data can be fetched from the GraphQL server.
