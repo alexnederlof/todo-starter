@@ -17,6 +17,7 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Install deps
               run: yarn
+              working-directory: ./server
             - name: Generate code front end
               working-directory: ./client
               run: yarn generate
@@ -52,6 +53,7 @@ jobs:
               with:
                   node-version: 12.2
             - name: Install deps
+              working-directory: ./server
               run: yarn
             - name: Generate code
               working-directory: ./server
