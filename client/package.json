@@ -18,11 +18,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "watch": "concurrently -k -p \"[{name}]\" -n \"Generate,Start\" -c \"magenta.bold,cyan.bold\" \"yarn generate\" \"yarn start\"",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"Generate,Start\" -c \"magenta.bold,cyan.bold\" \"yarn generate --watch\" \"yarn start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "generate": "graphql-codegen --config codegen.yml --watch"
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
     "extends": "react-app"

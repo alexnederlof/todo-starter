@@ -1,0 +1,65 @@
+name: Test code
+
+on: [push]
+
+jobs:
+    client:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [12.x]
+
+        steps:
+            - uses: actions/checkout@v1
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - name: Install deps
+              run: yarn
+            - name: Generate code front end
+              working-directory: ./client
+              run: yarn generate
+              env:
+                  CI: true
+            - name: Run tests
+              working-directory: ./client
+              run: yarn test
+              env:
+                  CI: true
+
+    server:
+        runs-on: ubuntu-latest
+        services:
+            postgres:
+                image: postgres:12.0
+                env:
+                    POSTGRES_USER: postgres
+                    POSTGRES_PASSWORD: postgres
+                    POSTGRES_DB: postgres
+                volumes:
+                    - './todo-db.sql:/docker-entrypoint-initdb.d/todo-db.sql:ro'
+                ports:
+                    # will assign a random free host port
+                    - 5432/tcp
+                # needed because the postgres container does not provide a healthcheck
+                options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+        steps:
+            - uses: actions/checkout@v1
+            - name: Setup Node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 12.2
+            - name: Install deps
+              run: yarn
+            - name: Generate code
+              working-directory: ./server
+              run: yarn generate
+            - name: Setup database
+              working-directory: ./client
+              run: yarn sync-db
+              env:
+                  CI: true
+                  POSTGRES_HOST: localhost
+                  POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }} # get randomly assigned published port
