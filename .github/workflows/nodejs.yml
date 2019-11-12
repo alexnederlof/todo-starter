@@ -21,8 +21,6 @@ jobs:
             - name: Generate code front end
               working-directory: ./client
               run: yarn generate
-              env:
-                  CI: true
             - name: Run tests
               working-directory: ./client
               run: yarn test
@@ -63,5 +61,5 @@ jobs:
               run: yarn sync-db
               env:
                   CI: true
-                  POSTGRES_HOST: localhost
-                  POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }} # get randomly assigned published port
+                  DB_HOST: localhost
+                  DB_PORT: ${{ job.services.postgres.ports[5432] }} # get randomly assigned published port
