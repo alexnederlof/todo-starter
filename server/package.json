@@ -6,17 +6,22 @@
   "dependencies": {
     "apollo-server": "^2.6.3",
     "commander": "^4.0.1",
+    "express-prom-bundle": "^5.1.5",
     "graphql": "^14.3.1",
+    "prom-client": "^11.5.3",
     "sequelize": "^5.8.10",
-    "typescript": "3.7.2"
+    "typescript": "3.7.2",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.2.1",
     "@graphql-codegen/typescript": "^1.2.1",
     "@graphql-codegen/typescript-resolvers": "^1.2.1",
     "concurrently": "^5.0.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.1",
     "pg": "^7.12.1",
+    "ts-jest": "^24.1.0",
     "ts-node": "^8.3.0"
   },
   "scripts": {
@@ -30,6 +35,7 @@
     "serve-debug": "nodemon --inspect ./build/index.js",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Generate,TypeScript,Node\" -c \"magenta.bold,green.bold,cyan.bold\" \"yarn generate --watch\" \"yarn watch-ts\" \"yarn serve-debug\"",
     "mysqldump-dev": "mysqldump todo -uroot --hex-blob --default-character-set=utf8mb4 >~/Desktop/todo-$(date +%F).sql",
-    "generate": "graphql-codegen --config codegen.yml"
+    "generate": "graphql-codegen --config codegen.yml",
+    "test": "jest"
   }
 }
