@@ -1,4 +1,4 @@
-mutation UpdateTodo($id: Int!, $complete: Boolean!) {
+mutation UpdateTodo($id: ID!, $complete: Boolean!) {
 	updateTodo(id: $id, complete: $complete) {
 		id
 		name
@@ -7,7 +7,7 @@ mutation UpdateTodo($id: Int!, $complete: Boolean!) {
 	}
 }
 
-mutation DestroyTodo($id: Int!) {
+mutation DestroyTodo($id: ID!) {
 	destroyTodo(id: $id) {
 		id
 	}

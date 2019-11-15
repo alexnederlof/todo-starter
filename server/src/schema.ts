@@ -4,7 +4,7 @@ export default gql`
   scalar Date
 
   type Todo {
-    id: Int!
+    id: ID!
     name: String!
     complete: Boolean!
     date: Date
@@ -12,17 +12,23 @@ export default gql`
 
   type Query {
     todos: [Todo!]!
-    users: [User]!
+    users: [User!]!
   }
 
   type Mutation {
     createTodo(name: String!, date: Date!): Todo!
-    updateTodo(id: Int!, name: String, complete: Boolean): Todo!
-    destroyTodo(id: Int!): Todo!
+    updateTodo(id: ID!, name: String, complete: Boolean): Todo!
+    destroyTodo(id: ID!): Todo!
+
+    createUser(name: String!, email: String!): User!
+    addRole(role: Role!): User!
+    removeRole(role: Role!): User!
+    setUserActive(id: ID!, active: Boolean): User!
   }
 
   type User {
-    ID: Int
+    id: ID!
+    email: String
     name: String
     avatar: String
     responsibilities: [Responsibility]
@@ -38,7 +44,7 @@ export default gql`
   }
 
   type Responsibility {
-    ID: Int
+    id: ID!
     name: String
     description: String
     responsible: User
@@ -47,7 +53,7 @@ export default gql`
   }
 
   type ResponsibilityUpdate {
-    ID: Int
+    id: ID!
     old: Responsibility
     new: Responsibility
     date: String
@@ -62,23 +68,27 @@ export default gql`
   }
 
   interface Event {
+    id: ID!
     at: String
     by: User
   }
 
   type UserCreatedEvent implements Event {
+    id: ID!
     at: String
     by: User
     created: User
   }
 
   type UserDeletedEvent implements Event {
+    id: ID!
     at: String
     by: User
     deleted: User
   }
 
   type SessionStartEvent implements Event {
+    id: ID!
     at: String
     by: User
     from_ip: String

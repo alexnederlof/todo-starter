@@ -1,6 +1,7 @@
 import { Kind } from 'graphql/language/kinds';
 import { GraphQLScalarType } from 'graphql/type/definition';
-import { Todo } from './models';
+import { Todo } from './models/Todo';
+import { User } from './models/User';
 import {
   MutationCreateTodoArgs,
   MutationUpdateTodoArgs,
@@ -11,6 +12,10 @@ export default {
   Query: {
     todos: async () => {
       const result = await Todo.findAll({});
+      return result;
+    },
+    users: async () => {
+      const result = await User.findAll({});
       return result;
     },
   },

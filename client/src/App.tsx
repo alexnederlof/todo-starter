@@ -8,6 +8,7 @@ import Header from './components/Header';
 import { Page } from './constants';
 import About from './containers/About';
 import Todos from './containers/Todos';
+import { UserList } from './containers/users/UserList';
 
 export const client = new ApolloClient({
   uri: 'http://localhost:4000',
@@ -32,6 +33,7 @@ export default function App() {
         <div className={classes.root}>
           <Header />
           <Route exact path="/" component={Todos} />
+          <Route exact path="/users" component={UserList} />
           <Route path={`/${Page.about}`} component={About} />
         </div>
       </Router>
