@@ -1,12 +1,13 @@
 import { ApolloServer } from 'apollo-server';
 import program from 'commander';
+import { delay } from 'q';
 import { sequelize } from './models';
 import resolvers from './resolvers';
 import typeDefs from './schema';
 
 program.option('-s, --sync-db', 'Sync database').parse(process.argv);
 
-const run = () => {
+const run = async () => {
   if (program.syncDb) {
     sequelize
       .sync({ force: true })
@@ -27,6 +28,17 @@ const run = () => {
     // by passing type definitions (typeDefs) and the resolvers
     // responsible for fetching the data for those types.
     const server = new ApolloServer({ typeDefs, resolvers });
+
+    while (true) {
+      try {
+        console.log('Checkin database connection');
+        await sequelize.validate();
+        break;
+      } catch (e) {
+        console.error('Cannot connect to database. Retry in 1 sec', e);
+        await delay(1000);
+      }
+    }
 
     // This `listen` method launches a web-server.  Existing apps
     // can utilize middleware options, which we'll discuss later.
