@@ -1,3 +1,5 @@
+import { Kind } from 'graphql/language/kinds';
+import { GraphQLScalarType } from 'graphql/type/definition';
 import { Todo } from './models';
 import {
   MutationCreateTodoArgs,
@@ -7,10 +9,16 @@ import {
 
 export default {
   Query: {
-    todos: () => Todo.findAll({}),
+    todos: async () => {
+      const result = await Todo.findAll({});
+      return result;
+    },
   },
   Mutation: {
-    createTodo: (_: any, args: MutationCreateTodoArgs) => Todo.create({ complete: false, ...args }),
+    createTodo: async (_: any, args: MutationCreateTodoArgs) => {
+      const created = await Todo.create({ complete: false, ...args });
+      return created;
+    },
     updateTodo: async (_: any, { id, ...args }: MutationUpdateTodoArgs) => {
       const todo = await Todo.findOne({ where: { id } });
       if (todo) {
@@ -28,4 +36,21 @@ export default {
       }
     },
   },
+
+  Date: new GraphQLScalarType({
+    name: 'Date',
+    description: 'Date custom scalar type',
+    parseValue(value) {
+      return new Date(value); // value from the client
+    },
+    serialize(value) {
+      return value.toISOString(); // value sent to the client
+    },
+    parseLiteral(ast) {
+      if (ast.kind === Kind.STRING) {
+        return new Date(ast.value);
+      }
+      return null;
+    },
+  }),
 };

@@ -1,13 +1,14 @@
 mutation UpdateTodo($id: Int!, $complete: Boolean!) {
-  updateTodo(id: $id, complete: $complete) {
-    id
-    name
-    complete
-  }
+	updateTodo(id: $id, complete: $complete) {
+		id
+		name
+		complete
+		date
+	}
 }
 
 mutation DestroyTodo($id: Int!) {
-  destroyTodo(id: $id) {
-    id
-  }
+	destroyTodo(id: $id) {
+		id
+	}
 }
