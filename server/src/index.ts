@@ -5,8 +5,10 @@ import resolvers from './resolvers';
 import typeDefs from './schema';
 import { sequelize } from './sequalize';
 
-program.option('-s, --sync-db', 'Sync database').parse(process.argv);
-program.option('-f, --force', 'Force DB reste').parse(process.argv);
+program
+  .option('-s, --sync-db', 'Sync database')
+  .option('-f, --force', 'Force DB reste')
+  .parse(process.argv);
 
 const run = async () => {
   if (program.syncDb) {

@@ -1,6 +1,6 @@
-import React from 'react';
+import { Button, Link, makeStyles, Toolbar, Typography } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
-import { Typography, Toolbar, Button, Link, makeStyles } from '@material-ui/core';
+import React from 'react';
 import { Link as RouterLink, LinkProps } from 'react-router-dom';
 import { Page } from '../constants';
 
@@ -18,7 +18,7 @@ const AdapterLink = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) 
 export default function Header() {
   const classes = useStyles();
   return (
-    <AppBar>
+    <AppBar position="sticky">
       <Toolbar className={classes.toolbar}>
         <Link component={AdapterLink} color="inherit" to="/">
           <Typography variant="h6" color="inherit">

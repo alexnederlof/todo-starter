@@ -1,11 +1,13 @@
 import { Kind } from 'graphql/language/kinds';
 import { GraphQLScalarType } from 'graphql/type/definition';
+import { async } from 'q';
 import { Todo } from './models/Todo';
 import { User } from './models/User';
 import {
   MutationCreateTodoArgs,
   MutationUpdateTodoArgs,
   MutationDestroyTodoArgs,
+  MutationCreateUserArgs,
 } from './generated/graphql';
 
 export default {
@@ -39,6 +41,17 @@ export default {
       } else {
         return null;
       }
+    },
+
+    createUser: async (_: any, { name, email, permissions }: MutationCreateUserArgs) => {
+      console.log('Creating user');
+      const created = await User.create({
+        name,
+        email,
+        permissions,
+        disabled: false,
+      });
+      return created;
     },
   },
 

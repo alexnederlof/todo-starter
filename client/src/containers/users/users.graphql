@@ -2,5 +2,16 @@ query Users {
 	users {
 		id
 		name
+		email
+		deactivated
+	}
+}
+mutation CreateUser($name: String!, $email: String!, $permissions: [Permission!]!) {
+	createUser(name: $name, email: $email, permissions: $permissions) {
+		id
+		email
+		name
+		permissions
+		deactivated
 	}
 }

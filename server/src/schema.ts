@@ -20,9 +20,9 @@ export default gql`
     updateTodo(id: ID!, name: String, complete: Boolean): Todo!
     destroyTodo(id: ID!): Todo!
 
-    createUser(name: String!, email: String!): User!
-    addRole(role: Role!): User!
-    removeRole(role: Role!): User!
+    createUser(name: String!, email: String!, permissions: [Permission!]!): User!
+    grantPermission(permission: Permission!): User!
+    revokePermissions(permission: Permission!): User!
     setUserActive(id: ID!, active: Boolean): User!
   }
 
@@ -31,34 +31,13 @@ export default gql`
     email: String
     name: String
     avatar: String
-    responsibilities: [Responsibility]
-    roles: [Role]
+    permissions: [Permission!]
     deactivated: Boolean
   }
 
-  enum Role {
-    PROPOSE_RESPONSIBILITY
-    APPROVE_RESPONSIBILITY
-    REMOVE_RESPONSIBILITY
+  enum Permission {
     MANAGE_USERS
-  }
-
-  type Responsibility {
-    id: ID!
-    name: String
-    description: String
-    responsible: User
-    created: ResponsibilityUpdate
-    updated: ResponsibilityUpdate
-  }
-
-  type ResponsibilityUpdate {
-    id: ID!
-    old: Responsibility
-    new: Responsibility
-    date: String
-    proposed_by: User
-    accepted_by: User
+    MODIFY_PERMISSIONS
   }
 
   enum Action {
