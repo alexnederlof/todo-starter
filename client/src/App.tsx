@@ -1,4 +1,4 @@
-import { grey } from '@material-ui/core/colors';
+import { CssBaseline } from '@material-ui/core';
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import ApolloClient from 'apollo-boost';
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: grey[200],
+    backgroundColor: '#181822',
   },
 
   topBarSpacer: {
@@ -29,12 +29,29 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const theme = createMuiTheme({});
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    background: {
+      default: '#181822',
+    },
+    primary: {
+      main: '#47FFaF',
+    },
+    secondary: {
+      main: '#3A55FF',
+    },
+    error: {
+      main: '#FFA246',
+    },
+  },
+});
 
 export default function App() {
   const classes = useStyles();
   return (
     <ApolloProvider client={client}>
+      <CssBaseline />
       <ThemeProvider theme={theme}>
         <Router>
           <div className={classes.root}>

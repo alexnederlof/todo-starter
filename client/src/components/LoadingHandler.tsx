@@ -1,10 +1,23 @@
+import { Paper, Theme, Typography } from '@material-ui/core';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { makeStyles } from '@material-ui/styles';
 import React from 'react';
 import { QueryResult } from 'react-apollo';
 
-const useStyles = makeStyles({
-  root: {},
-});
+const useStyles = makeStyles((theme: Theme) => ({
+  withPadding: {
+    padding: theme.spacing(2),
+  },
+
+  errorBox: {
+    padding: theme.spacing(2),
+    border: `1px solid ${theme.palette.error.main}`,
+  },
+
+  largeIcon: {
+    fontSize: theme.typography.h3.fontSize,
+  },
+}));
 
 interface Props<T> {
   result: QueryResult<T>;
@@ -17,9 +30,11 @@ export default function LoadingHandler<T>({ result, children }: Props<T>) {
     return <div>Loading...</div>;
   } else if (result.error) {
     return (
-      <div className={classes.root}>
-        <h1>An error occured!</h1>
-        <pre>{JSON.stringify(result.error, null, 2)}</pre>
+      <div className={classes.withPadding}>
+        <Paper className={classes.errorBox}>
+          <Typography variant="h2">An error occured!</Typography>
+          <pre>{JSON.stringify(result.error, null, 2)}</pre>
+        </Paper>
       </div>
     );
   }
