@@ -1,3 +1,4 @@
+import { isUserWhitespacable } from '@babel/types';
 import { Kind } from 'graphql/language/kinds';
 import { GraphQLScalarType } from 'graphql/type/definition';
 import { async } from 'q';
@@ -8,6 +9,8 @@ import {
   MutationUpdateTodoArgs,
   MutationDestroyTodoArgs,
   MutationCreateUserArgs,
+  QueryUserArgs,
+  MutationUpdateUserArgs,
 } from './generated/graphql';
 
 export default {
@@ -18,6 +21,11 @@ export default {
     },
     users: async () => {
       const result = await User.findAll({});
+      return result;
+    },
+
+    user: async (_: any, { id }: QueryUserArgs) => {
+      const result = await User.findByPk(Number(id));
       return result;
     },
   },
@@ -52,6 +60,13 @@ export default {
         disabled: false,
       });
       return created;
+    },
+
+    updateUser: async (_: any, toUpdate: MutationUpdateUserArgs) => {
+      console.log('Updating user ' + toUpdate.id);
+      const user = await User.findByPk(Number(toUpdate.id));
+      user.update(toUpdate);
+      return user;
     },
   },
 

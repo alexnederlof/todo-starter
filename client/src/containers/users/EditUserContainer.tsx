@@ -1,39 +1,59 @@
+import { Snackbar, SnackbarContent } from '@material-ui/core';
 import React, { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import CreateUser from '../../components/users/CreateUser';
-import { CreateUserComponent } from '../../generated/graphql';
+import { useMutation, useQuery } from 'react-apollo';
+import { useParams } from 'react-router-dom';
+import LoadingHandler from '../../components/LoadingHandler';
+import EditUser from '../../components/users/EditUser';
+import {
+  UserDocument,
+  UserQuery,
+  UserQueryVariables,
+  UpdateUserDocument,
+  UpdateUserMutation,
+  UpdateUserMutationVariables,
+} from '../../generated/graphql';
 
 export default function EditUserContainer() {
   const { id } = useParams();
   const [error, setError] = useState<Error | string | undefined>();
   const [saving, setSaving] = useState(false);
-  const history = useHistory();
+  const [showSnackbar, setSnackBarOn] = useState(false);
+  const result = useQuery<UserQuery, UserQueryVariables>(UserDocument, {
+    variables: { id: id! },
+  });
 
-  if (id === 'new') {
-    return (
-      <CreateUserComponent>
-        {create => (
-          <CreateUser
-            saving={saving}
-            error={error}
-            onCreate={async (name, email, permissions) => {
-              try {
-                setSaving(true);
-                const result = await create({ variables: { name, email, permissions } });
-                console.log('result', result);
-                history.push('/users');
-              } catch (e) {
-                setError(e);
-                console.log('error ' + e, e);
-              } finally {
-                setSaving(false);
-              }
-            }}
-          />
-        )}
-      </CreateUserComponent>
-    );
-  } else {
-    return <div>User {id} </div>;
-  }
+  const [updateUser] = useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
+    UpdateUserDocument
+  );
+
+  const onSave = async (user: UpdateUserMutationVariables) => {
+    try {
+      setSaving(true);
+      await updateUser({
+        variables: user,
+      });
+    } catch (e) {
+      setError(e);
+    } finally {
+      setSaving(false);
+    }
+  };
+  return (
+    <>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        open={showSnackbar}
+        autoHideDuration={5000}
+        onClose={() => setSnackBarOn(false)}
+      >
+        <SnackbarContent message="Saved" />
+      </Snackbar>
+      <LoadingHandler result={result}>
+        {({ user }) => <EditUser user={user!} saving={saving} error={error} onSave={onSave} />}
+      </LoadingHandler>
+    </>
+  );
 }

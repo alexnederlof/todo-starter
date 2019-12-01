@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { User } from '../../generated/graphql';
 import {
   Grid,
@@ -29,10 +30,18 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
   addUser: {
     float: 'right',
   },
+
+  clickable: {
+    '&:hover': {
+      backgroundColor: 'red',
+      color: 'red',
+    },
+  },
 }));
 
 export function UserList({ users }: Props) {
   const classes = useStyles();
+  const history = useHistory();
   return (
     <Grid container={true} justify="center" alignItems="flex-start">
       <Grid item={true} xs={12} sm={11}>
@@ -63,7 +72,11 @@ export function UserList({ users }: Props) {
                 </TableRow>
               )}
               {users.map(user => (
-                <TableRow>
+                <TableRow
+                  hover={true}
+                  className={classes.clickable}
+                  onClick={event => history.push(`/users/${user.id}`)}
+                >
                   <TableCell>{user.id}</TableCell>
                   <TableCell>{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>

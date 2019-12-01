@@ -1,5 +1,4 @@
 import { Paper, Theme, Typography } from '@material-ui/core';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { makeStyles } from '@material-ui/styles';
 import React from 'react';
 import { QueryResult } from 'react-apollo';

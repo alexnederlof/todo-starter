@@ -13,6 +13,7 @@ export default gql`
   type Query {
     todos: [Todo!]!
     users: [User!]!
+    user(id: ID!): User
   }
 
   type Mutation {
@@ -21,9 +22,7 @@ export default gql`
     destroyTodo(id: ID!): Todo!
 
     createUser(name: String!, email: String!, permissions: [Permission!]!): User!
-    grantPermission(permission: Permission!): User!
-    revokePermissions(permission: Permission!): User!
-    setUserActive(id: ID!, active: Boolean): User!
+    updateUser(id: ID!, deactivated: Boolean, name: String, permissions: [Permission!]): User!
   }
 
   type User {
