@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import LoadingHandler from '../../components/LoadingHandler';
 import { UserList } from '../../components/users/UserList';
-import { UsersComponent } from '../../generated/graphql';
+import { useUsersLazyQuery } from '../../generated/graphql';
 
 export function UserListContainer() {
+  const [searchUsers, result] = useUsersLazyQuery();
+  const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    searchUsers({ variables: { query } });
+  }, [query, searchUsers, result.loading]);
+
   return (
-    <UsersComponent>
-      {result => (
-        <LoadingHandler result={result}>{data => <UserList users={data.users!} />}</LoadingHandler>
-      )}
-    </UsersComponent>
+    <LoadingHandler result={result}>
+      {data => <UserList users={data.users!} query={query} onSearch={setQuery} />}
+    </LoadingHandler>
   );
 }

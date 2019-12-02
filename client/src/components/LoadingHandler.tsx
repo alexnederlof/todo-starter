@@ -25,7 +25,7 @@ interface Props<T> {
 
 export default function LoadingHandler<T>({ result, children }: Props<T>) {
   const classes = useStyles();
-  if (result.loading) {
+  if (result.loading || !result.called) {
     return <div>Loading...</div>;
   } else if (result.error) {
     return (

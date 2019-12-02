@@ -12,7 +12,7 @@ export default gql`
 
   type Query {
     todos: [Todo!]!
-    users: [User!]!
+    users(query: String): [User!]!
     user(id: ID!): User
   }
 

@@ -17,6 +17,8 @@ import {
 
 export interface Props {
   users: Pick<User, 'id' | 'name' | 'email' | 'deactivated'>[];
+  onSearch: (query: string) => void;
+  query: string;
 }
 
 const useStyles = makeStyles(({ spacing }: Theme) => ({
@@ -39,7 +41,7 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
   },
 }));
 
-export function UserList({ users }: Props) {
+export function UserList({ users, onSearch, query }: Props) {
   const classes = useStyles();
   const history = useHistory();
   return (
@@ -47,7 +49,12 @@ export function UserList({ users }: Props) {
       <Grid item={true} xs={12} sm={11}>
         <Paper className={classes.root}>
           <Grid item={true} className={classes.toolbar}>
-            <TextField placeholder="Search"></TextField>
+            <TextField
+              placeholder="Search"
+              value={query}
+              autoFocus={true}
+              onChange={event => onSearch(event.target.value)}
+            ></TextField>
             <Button
               href="/users/new"
               variant="contained"
@@ -71,8 +78,9 @@ export function UserList({ users }: Props) {
                   <TableCell colSpan={2}>No users found</TableCell>
                 </TableRow>
               )}
-              {users.map(user => (
+              {users.map((user, index) => (
                 <TableRow
+                  key={index}
                   hover={true}
                   className={classes.clickable}
                   onClick={event => history.push(`/users/${user.id}`)}

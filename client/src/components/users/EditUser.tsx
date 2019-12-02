@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Permission } from '../../generated/graphql';
+import { UpdateUserMutationVariables, User } from '../../generated/graphql';
 import {
   Button,
   Grid,
@@ -11,10 +11,13 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 
+export type MutableUserFields = Pick<User, 'name' | 'email' | 'permissions' | 'deactivated'>;
+
 export interface Props {
-  onCreate: (name: string, email: string, permissions: Permission[]) => void;
+  onSave: (toUpdate: UpdateUserMutationVariables) => void;
   error?: Error | string;
   saving: boolean;
+  user: Pick<User, 'id' | 'name' | 'email' | 'permissions' | 'deactivated'>;
 }
 
 const useStyles = makeStyles(({ spacing }: Theme) => ({
@@ -31,26 +34,35 @@ interface ValidatedText {
   valid: boolean;
 }
 
-const emptyText = { value: '', valid: false };
-
-export default function CreateUser({ onCreate, saving, error }: Props) {
+export default function EditUser({ user, onSave, saving, error }: Props) {
   const classes = useStyles();
-  const [name, setName] = useState<ValidatedText>(emptyText);
-  const [email, setEmail] = useState<ValidatedText>(emptyText);
+  const [name, setName] = useState<ValidatedText>({
+    value: user.name!,
+    valid: true,
+  });
+  const [email, setEmail] = useState<ValidatedText>({
+    value: user.email!,
+    valid: true,
+  });
 
   function onSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     event.preventDefault();
     if (!name.valid || !email.valid) {
       return;
     }
-    onCreate(name.value, email.value, []);
+    onSave({
+      id: `${user.id}`,
+      name: name.value,
+      permissions: [],
+      deactivated: false,
+    });
   }
 
   return (
     <Grid container={true} justify="center" alignItems="flex-start">
       <Grid item={true} xs={12} sm={11}>
         <Paper className={classes.root}>
-          <form autoComplete="off">
+          <form>
             <Grid xs={12} item={true}>
               <TextField
                 className={classes.formItem}
@@ -94,6 +106,8 @@ export default function CreateUser({ onCreate, saving, error }: Props) {
               </Typography>
             )}
 
+            <div>Permissions {user!.permissions!.join(' ')}</div>
+
             <Button
               className={classes.formItem}
               disabled={saving || !name.valid || !email.valid}
@@ -102,7 +116,7 @@ export default function CreateUser({ onCreate, saving, error }: Props) {
               variant="contained"
               onClick={event => onSubmit(event)}
             >
-              Create {name.value}
+              Save
             </Button>
             {saving && <CircularProgress />}
           </form>

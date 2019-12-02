@@ -1,5 +1,5 @@
-query Users {
-	users {
+query Users($query: String) {
+	users(query: $query) {
 		id
 		name
 		email

@@ -2,6 +2,7 @@ import { isUserWhitespacable } from '@babel/types';
 import { Kind } from 'graphql/language/kinds';
 import { GraphQLScalarType } from 'graphql/type/definition';
 import { async } from 'q';
+import { Op } from 'sequelize';
 import { Todo } from './models/Todo';
 import { User } from './models/User';
 import {
@@ -10,6 +11,7 @@ import {
   MutationDestroyTodoArgs,
   MutationCreateUserArgs,
   QueryUserArgs,
+  QueryUsersArgs,
   MutationUpdateUserArgs,
 } from './generated/graphql';
 
@@ -19,9 +21,28 @@ export default {
       const result = await Todo.findAll({});
       return result;
     },
-    users: async () => {
-      const result = await User.findAll({});
-      return result;
+    users: async (_: any, { query }: QueryUsersArgs) => {
+      if (!query?.length) {
+        return await User.findAll({});
+      } else {
+        const matcher = `%${query}%`;
+        return await User.findAll({
+          where: {
+            [Op.or]: [
+              {
+                name: {
+                  [Op.like]: matcher,
+                },
+              },
+              {
+                email: {
+                  [Op.like]: matcher,
+                },
+              },
+            ],
+          },
+        });
+      }
     },
 
     user: async (_: any, { id }: QueryUserArgs) => {
@@ -64,8 +85,8 @@ export default {
 
     updateUser: async (_: any, toUpdate: MutationUpdateUserArgs) => {
       console.log('Updating user ' + toUpdate.id);
-      const user = await User.findByPk(Number(toUpdate.id));
-      user.update(toUpdate);
+      let user = await User.findByPk(Number(toUpdate.id));
+      user = user.update(toUpdate);
       return user;
     },
   },

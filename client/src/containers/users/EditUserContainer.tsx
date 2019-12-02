@@ -1,30 +1,33 @@
 import { Snackbar, SnackbarContent } from '@material-ui/core';
 import React, { useState } from 'react';
-import { useMutation, useQuery } from 'react-apollo';
-import { useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import LoadingHandler from '../../components/LoadingHandler';
 import EditUser from '../../components/users/EditUser';
 import {
-  UserDocument,
-  UserQuery,
-  UserQueryVariables,
-  UpdateUserDocument,
-  UpdateUserMutation,
   UpdateUserMutationVariables,
+  useUserQuery,
+  useUpdateUserMutation,
 } from '../../generated/graphql';
 
 export default function EditUserContainer() {
   const { id } = useParams();
   const [error, setError] = useState<Error | string | undefined>();
   const [saving, setSaving] = useState(false);
-  const [showSnackbar, setSnackBarOn] = useState(false);
-  const result = useQuery<UserQuery, UserQueryVariables>(UserDocument, {
+  const [successBarVisible, showSuccessBar] = useState(false);
+  const location = useLocation();
+  const history = useHistory();
+  const result = useUserQuery({
     variables: { id: id! },
   });
 
-  const [updateUser] = useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
-    UpdateUserDocument
-  );
+  const [updateUser] = useUpdateUserMutation();
+
+  if (!successBarVisible && location.state?.userCreated) {
+    showSuccessBar(true);
+    const stateCopy = location.state || {};
+    delete stateCopy.userCreated;
+    history.replace(history.location.pathname, stateCopy);
+  }
 
   const onSave = async (user: UpdateUserMutationVariables) => {
     try {
@@ -32,6 +35,7 @@ export default function EditUserContainer() {
       await updateUser({
         variables: user,
       });
+      showSuccessBar(true);
     } catch (e) {
       setError(e);
     } finally {
@@ -45,9 +49,12 @@ export default function EditUserContainer() {
           vertical: 'top',
           horizontal: 'center',
         }}
-        open={showSnackbar}
+        open={successBarVisible}
         autoHideDuration={5000}
-        onClose={() => setSnackBarOn(false)}
+        onClose={() => {
+          console.log('Closing');
+          showSuccessBar(false);
+        }}
       >
         <SnackbarContent message="Saved" />
       </Snackbar>
