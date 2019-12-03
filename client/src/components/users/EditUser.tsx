@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UpdateUserMutationVariables, User } from '../../generated/graphql';
+import { Permission, UpdateUserMutationVariables, User } from '../../generated/graphql';
 import {
   Button,
   Grid,
@@ -9,6 +9,11 @@ import {
   Theme,
   Typography,
   CircularProgress,
+  Chip,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
 } from '@material-ui/core';
 
 export type MutableUserFields = Pick<User, 'name' | 'email' | 'permissions' | 'deactivated'>;
@@ -26,6 +31,10 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
   },
   formItem: {
     marginTop: spacing(2),
+  },
+  formControl: {
+    margin: spacing(1),
+    minWidth: 150,
   },
 }));
 
@@ -45,6 +54,8 @@ export default function EditUser({ user, onSave, saving, error }: Props) {
     valid: true,
   });
 
+  const [permissions, setPermissions] = useState<Permission[]>(user.permissions || []);
+
   function onSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     event.preventDefault();
     if (!name.valid || !email.valid) {
@@ -53,7 +64,7 @@ export default function EditUser({ user, onSave, saving, error }: Props) {
     onSave({
       id: `${user.id}`,
       name: name.value,
-      permissions: [],
+      permissions,
       deactivated: false,
     });
   }
@@ -106,8 +117,39 @@ export default function EditUser({ user, onSave, saving, error }: Props) {
               </Typography>
             )}
 
-            <div>Permissions {user!.permissions!.join(' ')}</div>
-
+            <div>
+              <Typography variant="body1">Current permissions:</Typography>
+              {permissions.map((permission, index) => (
+                <Chip
+                  key={index}
+                  label={permission}
+                  onDelete={() => setPermissions(permissions.filter(other => other !== permission))}
+                  variant="outlined"
+                />
+              ))}
+              {permissions.length === 0 && (
+                <Typography variant="caption">No permissions set</Typography>
+              )}
+            </div>
+            <div>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="add-permission-label">Add permission</InputLabel>
+                <Select
+                  labelId="add-permission-label"
+                  onChange={selected =>
+                    setPermissions([...permissions, selected.target.value as Permission])
+                  }
+                >
+                  {Object.values(Permission)
+                    .filter(p => !permissions.includes(p as Permission))
+                    .map((permission, index) => (
+                      <MenuItem key={index} value={permission}>
+                        {permission}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </div>
             <Button
               className={classes.formItem}
               disabled={saving || !name.valid || !email.valid}
