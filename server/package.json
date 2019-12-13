@@ -33,7 +33,7 @@
     "watch-ts": "tsc -w -p .",
     "serve-debug": "nodemon --inspect ./build/index.js",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Generate,TypeScript,Node\" -c \"magenta.bold,green.bold,cyan.bold\" \"yarn generate --watch\" \"yarn watch-ts\" \"yarn serve-debug\"",
-    "mysqldump-dev": "mysqldump todo -uroot --hex-blob --default-character-set=utf8mb4 >~/Desktop/todo-$(date +%F).sql",
+    "mysqldump-dev": "mysqldump my_app -uroot --hex-blob --default-character-set=utf8mb4 >~/Desktop/my_app-$(date +%F).sql",
     "generate": "graphql-codegen --config codegen.yml",
     "test": "jest --runInBand --forceExit"
   }

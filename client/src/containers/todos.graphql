@@ -1,8 +1,0 @@
-query Todos {
-	todos {
-		id
-		name
-		complete
-		date
-	}
-}
