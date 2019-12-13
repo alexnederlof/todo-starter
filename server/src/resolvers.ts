@@ -1,57 +1,70 @@
+import { AppContext } from '.';
 import { isUserWhitespacable } from '@babel/types';
 import { Kind } from 'graphql/language/kinds';
+import Maybe from 'graphql/tsutils/Maybe';
 import { GraphQLScalarType } from 'graphql/type/definition';
+import jwt from 'jsonwebtoken';
 import { async } from 'q';
 import { Op } from 'sequelize';
+import { createJwtTokenFor } from './auth/jwt';
+import { authorizeCode, getGithubUser } from './github';
 import { Event } from './models/Events';
 import { User } from './models/User';
+
 import {
   MutationCreateUserArgs,
   QueryUserArgs,
   QueryUsersArgs,
   MutationUpdateUserArgs,
+  MutationAuthorizeWithGithubArgs,
+  AuthResponse,
 } from './generated/graphql';
 
 export default {
   Query: {
-    users: async (_: any, { query }: QueryUsersArgs) => {
-      if (!query?.length) {
-        return await User.findAll({});
-      } else {
-        const matchers = query
-          .split(' ')
-          .filter(q => q.length > 0)
-          .map(q => `%${q.toLocaleLowerCase()}%`)
-          .map(q => ({
-            [Op.or]: [
-              {
-                name: {
-                  [Op.iLike]: q,
-                },
-              },
-              {
-                email: {
-                  [Op.iLike]: q,
-                },
-              },
-            ],
-          }));
-
-        return await User.findAll({
-          where: {
-            [Op.or]: matchers,
-          },
-        });
-      }
+    users: async (_: any, { query }: QueryUsersArgs): Promise<User[]> => {
+      return User.search(query);
     },
 
-    user: async (_: any, { id }: QueryUserArgs) => {
+    user: async (_: any, { id }: QueryUserArgs): Promise<User | null> => {
       const result = await User.findByPk(Number(id));
       return result;
     },
+
+    me: async (_: any, {}, context: AppContext): Promise<User> => {
+      return User.findByPk(context.token?.id);
+    },
   },
   Mutation: {
-    createUser: async (_: any, { name, email, permissions }: MutationCreateUserArgs) => {
+    authorizeWithGithub: async (
+      _: any,
+      { code }: MutationAuthorizeWithGithubArgs
+    ): Promise<AuthResponse> => {
+      console.log('Login to GitHub with ' + code);
+      const authToken = await authorizeCode(code);
+      console.log('Got auth token ' + authToken);
+      const githubUser = await getGithubUser(authToken);
+      console.log('Now authorized as ', githubUser);
+
+      let user = await User.findOne({ where: { email: githubUser.email! } });
+      if (!user) {
+        console.log('Creating user ' + githubUser.email);
+        user = await User.upsert({
+          name: githubUser.name,
+          email: githubUser.email,
+          avatar: githubUser.avatar_url,
+          permissions: [],
+          disabled: false,
+        });
+      }
+      const token = createJwtTokenFor(user);
+      return { token, user };
+    },
+
+    createUser: async (
+      _: any,
+      { name, email, permissions }: MutationCreateUserArgs
+    ): Promise<User> => {
       console.log('Creating user');
       const created = await User.create({
         name,
@@ -68,7 +81,7 @@ export default {
       return created;
     },
 
-    updateUser: async (_: any, toUpdate: MutationUpdateUserArgs) => {
+    updateUser: async (_: any, toUpdate: MutationUpdateUserArgs): Promise<User> => {
       console.log('Updating user ' + toUpdate.id);
       let user: User = await User.findByPk(Number(toUpdate.id));
       user = await user.update(toUpdate);

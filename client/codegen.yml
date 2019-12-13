@@ -7,8 +7,8 @@ generates:
             - 'typescript-operations'
             - 'typescript'
         config:
-            # withComponent: false
-            # withHOC: false
+            withComponent: false
+            withHOC: false
             withHooks: true
             reactApolloVersion: 3
             addDocBlocks: true

@@ -6,11 +6,18 @@ export default gql`
   type Query {
     users(query: String): [User!]!
     user(id: ID!): User
+    me: User!
   }
 
   type Mutation {
     createUser(name: String!, email: String!, permissions: [Permission!]!): User!
     updateUser(id: ID!, deactivated: Boolean, name: String, permissions: [Permission!]): User!
+    authorizeWithGithub(code: String!): AuthResponse!
+  }
+
+  type AuthResponse {
+    user: User!
+    token: String!
   }
 
   type User {
