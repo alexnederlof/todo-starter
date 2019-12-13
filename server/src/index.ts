@@ -1,16 +1,19 @@
 import { ApolloServer } from 'apollo-server';
 import program from 'commander';
 import { delay } from 'q';
-import { sequelize } from './models';
 import resolvers from './resolvers';
 import typeDefs from './schema';
+import { sequelize } from './sequalize';
 
-program.option('-s, --sync-db', 'Sync database').parse(process.argv);
+program
+  .option('-s, --sync-db', 'Sync database')
+  .option('-f, --force', 'Force DB reste')
+  .parse(process.argv);
 
 const run = async () => {
   if (program.syncDb) {
     sequelize
-      .sync({ force: true })
+      .sync({ force: program.force })
       .then(() => {
         console.log('Database updated!');
         sequelize.close();

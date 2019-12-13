@@ -1,3 +1,5 @@
+import DeleteIcon from '@material-ui/icons/Delete';
+import { makeStyles } from '@material-ui/styles';
 import React from 'react';
 import {
   ListItem,
@@ -6,7 +8,6 @@ import {
   ListItemSecondaryAction,
   IconButton,
 } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
 import {
   Todo as TodoType,
   UpdateTodoComponent,
@@ -15,7 +16,6 @@ import {
   TodosDocument,
   DestroyTodoComponent,
 } from '../generated/graphql';
-import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   complete: {
@@ -60,7 +60,7 @@ export default function Todo({ todo }: Props) {
         >
           <Checkbox checked={todo.complete} tabIndex={-1} disableRipple />
           <ListItemText
-            primary={todo.name}
+            primary={`${todo.name} at ${todo.date}`}
             classes={todo.complete ? { primary: classes.complete } : undefined}
           />
           <ListItemSecondaryAction>

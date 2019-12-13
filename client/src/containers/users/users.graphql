@@ -1,0 +1,39 @@
+query Users($query: String) {
+	users(query: $query) {
+		id
+		name
+		email
+		deactivated
+	}
+}
+
+query User($id: ID!) {
+	user(id: $id) {
+		id
+		email
+		name
+		avatar
+		permissions
+		deactivated
+	}
+}
+
+mutation CreateUser($name: String!, $email: String!, $permissions: [Permission!]!) {
+	createUser(name: $name, email: $email, permissions: $permissions) {
+		id
+		email
+		name
+		permissions
+		deactivated
+	}
+}
+
+mutation UpdateUser($id: ID!, $deactivated: Boolean, $name: String, $permissions: [Permission!]) {
+	updateUser(id: $id, name: $name, deactivated: $deactivated, permissions: $permissions) {
+		id
+		email
+		name
+		permissions
+		deactivated
+	}
+}

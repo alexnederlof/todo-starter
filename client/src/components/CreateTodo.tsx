@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { TextField } from '@material-ui/core';
+import React, { useState } from 'react';
 import {
   CreateTodoComponent,
   TodosQuery,
@@ -40,7 +40,7 @@ export default function CreateTodo() {
           onChange={event => setName(event.target.value)}
           onKeyPress={event => {
             if (event.key === 'Enter') {
-              createTodo({ variables: { name } }).then(() => setName(''));
+              createTodo({ variables: { name, date: new Date() } }).then(() => setName(''));
             }
           }}
         />

@@ -1,5 +1,8 @@
-schema: "src/schema.ts"
+schema: 'src/schema.ts'
 generates:
-  src/generated/graphql.d.ts:
-    plugins:
-      - "typescript"
+    # It should be .d.ts, but Jest doesn't understand that
+    src/generated/graphql.ts:
+        plugins:
+            - 'typescript'
+            - 'typescript-operations'
+            - 'typescript-resolvers'
