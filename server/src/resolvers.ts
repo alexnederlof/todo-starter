@@ -3,6 +3,7 @@ import { Kind } from 'graphql/language/kinds';
 import { GraphQLScalarType } from 'graphql/type/definition';
 import { async } from 'q';
 import { Op } from 'sequelize';
+import { Event } from './models/Events';
 import { User } from './models/User';
 import {
   MutationCreateUserArgs,
@@ -58,13 +59,19 @@ export default {
         permissions,
         disabled: false,
       });
+      await Event.create({
+        by: 1, // Should be the current user
+        meta: {
+          user: created.id,
+        },
+      });
       return created;
     },
 
     updateUser: async (_: any, toUpdate: MutationUpdateUserArgs) => {
       console.log('Updating user ' + toUpdate.id);
-      let user = await User.findByPk(Number(toUpdate.id));
-      user = user.update(toUpdate);
+      let user: User = await User.findByPk(Number(toUpdate.id));
+      user = await user.update(toUpdate);
       return user;
     },
   },

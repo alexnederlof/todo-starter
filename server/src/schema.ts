@@ -35,27 +35,27 @@ export default gql`
 
   interface Event {
     id: ID!
-    at: String
+    at: Date
     by: User
   }
 
   type UserCreatedEvent implements Event {
     id: ID!
-    at: String
+    at: Date
     by: User
     created: User
   }
 
   type UserDeletedEvent implements Event {
     id: ID!
-    at: String
+    at: Date
     by: User
     deleted: User
   }
 
   type SessionStartEvent implements Event {
     id: ID!
-    at: String
+    at: Date
     by: User
     from_ip: String
     from_device: String
