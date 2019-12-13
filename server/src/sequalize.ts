@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+import { init as eventInit } from './models/Events';
 import { init as userInit } from './models/User';
 
 export const sequelize = new Sequelize({
@@ -16,3 +17,4 @@ export const sequelize = new Sequelize({
 });
 
 userInit(sequelize);
+eventInit(sequelize);

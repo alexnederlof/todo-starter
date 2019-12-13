@@ -1,6 +1,7 @@
 import { ApolloServer, gql } from 'apollo-server';
 import { ApolloServerTestClient } from 'apollo-server-testing';
 import { MutationCreateUserArgs, Permission } from '../generated/graphql';
+import { Event } from '../models/Events';
 import { User } from '../models/User';
 import { WithServerEnvironment } from './test_util/WithServerEnvironment';
 
@@ -35,6 +36,7 @@ const updateUserQuery = gql`
 
 test('Create and update user works', async () => {
   expect(await User.findAll()).toEqual([]);
+  expect(await Event.findAll()).toEqual([]);
   const toCreate: MutationCreateUserArgs = {
     name: 'Some User',
     email: 'me@example.com',
@@ -60,4 +62,6 @@ test('Create and update user works', async () => {
   const updated: User = updateResult?.data?.updateUser!;
   expect(updated.id).toEqual(user.id);
   expect(updated.permissions).toEqual([Permission.ManageUsers]);
+
+  expect(await Event.findAll()).toHaveLength(1);
 });
