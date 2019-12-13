@@ -7,8 +7,8 @@
     "apollo-server": "^2.9.13",
     "commander": "^4.0.1",
     "graphql": "^14.3.1",
-    "sequelize": "^5.8.10",
-    "typescript": "3.7.2"
+    "sequelize": "^5.21.3",
+    "typescript": "3.7.3"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.9.1",
@@ -16,12 +16,13 @@
     "@graphql-codegen/typescript-resolvers": "^1.9.1",
     "@types/jest": "^24.0.23",
     "apollo-server-testing": "^2.9.13",
-    "concurrently": "^5.0.0",
+    "concurrently": "^5.0.1",
+    "husky": "^3.1.0",
     "jest": "^24.9.0",
     "nodemon": "^1.19.1",
-    "pg": "^7.12.1",
+    "pg": "^7.14.0",
     "ts-jest": "^24.2.0",
-    "ts-node": "^8.3.0"
+    "ts-node": "^8.5.4"
   },
   "scripts": {
     "start": "node ./build/index.js",
