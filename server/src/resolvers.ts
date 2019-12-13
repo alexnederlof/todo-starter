@@ -3,12 +3,8 @@ import { Kind } from 'graphql/language/kinds';
 import { GraphQLScalarType } from 'graphql/type/definition';
 import { async } from 'q';
 import { Op } from 'sequelize';
-import { Todo } from './models/Todo';
 import { User } from './models/User';
 import {
-  MutationCreateTodoArgs,
-  MutationUpdateTodoArgs,
-  MutationDestroyTodoArgs,
   MutationCreateUserArgs,
   QueryUserArgs,
   QueryUsersArgs,
@@ -17,10 +13,6 @@ import {
 
 export default {
   Query: {
-    todos: async () => {
-      const result = await Todo.findAll({});
-      return result;
-    },
     users: async (_: any, { query }: QueryUsersArgs) => {
       if (!query?.length) {
         return await User.findAll({});
@@ -58,27 +50,6 @@ export default {
     },
   },
   Mutation: {
-    createTodo: async (_: any, args: MutationCreateTodoArgs) => {
-      const created = await Todo.create({ complete: false, ...args });
-      return created;
-    },
-    updateTodo: async (_: any, { id, ...args }: MutationUpdateTodoArgs) => {
-      const todo = await Todo.findOne({ where: { id } });
-      if (todo) {
-        return todo.update(args);
-      } else {
-        return null;
-      }
-    },
-    destroyTodo: async (_: any, { id }: MutationDestroyTodoArgs) => {
-      const todo = await Todo.findOne({ where: { id } });
-      if (todo) {
-        return todo.destroy();
-      } else {
-        return null;
-      }
-    },
-
     createUser: async (_: any, { name, email, permissions }: MutationCreateUserArgs) => {
       console.log('Creating user');
       const created = await User.create({

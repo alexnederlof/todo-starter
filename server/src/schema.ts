@@ -3,24 +3,12 @@ import { gql } from 'apollo-server';
 export default gql`
   scalar Date
 
-  type Todo {
-    id: ID!
-    name: String!
-    complete: Boolean!
-    date: Date
-  }
-
   type Query {
-    todos: [Todo!]!
     users(query: String): [User!]!
     user(id: ID!): User
   }
 
   type Mutation {
-    createTodo(name: String!, date: Date!): Todo!
-    updateTodo(id: ID!, name: String, complete: Boolean): Todo!
-    destroyTodo(id: ID!): Todo!
-
     createUser(name: String!, email: String!, permissions: [Permission!]!): User!
     updateUser(id: ID!, deactivated: Boolean, name: String, permissions: [Permission!]): User!
   }

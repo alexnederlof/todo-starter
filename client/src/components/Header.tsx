@@ -27,7 +27,7 @@ export default function Header() {
       <Toolbar className={classes.toolbar}>
         <Link component={AdapterLink} color="inherit" to="/">
           <Typography variant="h6" color="inherit">
-            Todos
+            Users
           </Typography>
         </Link>
         <Button color="inherit" component={AdapterLink} to={`/${Page.about}`}>

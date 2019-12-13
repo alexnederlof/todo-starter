@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import Header from './components/Header';
 import { Page } from './constants';
 import About from './containers/About';
-import Todos from './containers/Todos';
 import CreateUserContainer from './containers/users/CreateUserContainer';
 import EditUserContainer from './containers/users/EditUserContainer';
 import { UserListContainer } from './containers/users/UserListContainer';
@@ -59,7 +58,6 @@ export default function App() {
             <Header />
             <div className={classes.topBarSpacer}>
               <Switch>
-                <Route exact path="/todo" component={Todos} />
                 <Route exact path="/users/new" component={CreateUserContainer} />
                 <Route exact path="/users/:id" component={EditUserContainer} />
                 <Route exact path="/users" component={UserListContainer} />

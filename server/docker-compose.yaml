@@ -6,6 +6,6 @@ services:
             - '5432:5432'
         restart: always
         environment:
-            POSTGRES_USER: todo
-            POSTGRES_PASSWORD: todo-secret
-            POSTGRES_DB: todo
+            POSTGRES_USER: my_app
+            POSTGRES_PASSWORD: my_app_secret
+            POSTGRES_DB: my_app

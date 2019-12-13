@@ -1,11 +1,10 @@
 import { Sequelize } from 'sequelize';
-import { init as todoInit } from './models/Todo';
 import { init as userInit } from './models/User';
 
 export const sequelize = new Sequelize({
-  database: process.env.DB_NAME || 'todo',
-  username: process.env.DB_USER || 'todo',
-  password: process.env.DB_PASS || 'todo-secret',
+  database: process.env.DB_NAME || 'my_app',
+  username: process.env.DB_USER || 'my_app',
+  password: process.env.DB_PASS || 'my_app_secret',
   host: process.env.DB_HOST || 'localhost',
   port: Number(process.env.DB_PORT || 5432),
   dialect: 'postgres',
@@ -17,4 +16,3 @@ export const sequelize = new Sequelize({
 });
 
 userInit(sequelize);
-todoInit(sequelize);

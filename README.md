@@ -7,7 +7,7 @@ TypeScript with React, Apollo and Node example
 ### Install dependencies
 
 ```bash
-yarn install
+yarn
 ```
 
 ### Setup database
@@ -16,7 +16,6 @@ Create database and sync (creating tables).
 
 ```bash
 cd server
-./createDb.sh  # Assumes MySQL is installed with Homebrew
 yarn sync-db
 ```
 
@@ -37,17 +36,6 @@ In terminal 2
 cd client
 yarn watch
 ```
-
-## Setup [VSCode](https://code.visualstudio.com/) (recommended IDE/Editor)
-
-The config files (`.vscode/`) are included which formats on save and automatically attaches the debugger.
-
-### Install recommended [extensions](https://code.visualstudio.com/docs/editor/extension-gallery)
-
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
-- [GraphQL for VSCode](https://marketplace.visualstudio.com/items?itemName=kumar-harsh.graphql-for-vscode)
 
 ### Debug client
 
@@ -85,10 +73,10 @@ killall node
 
 ## References
 
-- [TypesScript](https://www.typescriptlang.org/)
-- [React](https://reactjs.org/)
-- [Apollo Client](https://www.apollographql.com/docs/react/)
-- [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
-- [GraphQL Codegen](https://graphql-code-generator.com/docs/getting-started/)
-- [Sequelize](http://docs.sequelizejs.com/)
-- [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
+-   [TypesScript](https://www.typescriptlang.org/)
+-   [React](https://reactjs.org/)
+-   [Apollo Client](https://www.apollographql.com/docs/react/)
+-   [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
+-   [GraphQL Codegen](https://graphql-code-generator.com/docs/getting-started/)
+-   [Sequelize](http://docs.sequelizejs.com/)
+-   [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)

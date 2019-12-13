@@ -26,7 +26,7 @@ jobs:
                   node-version: 12.13
             - name: Install deps
               run: yarn
-              working-directory: ./server
+              working-directory: ./client
             - name: Generate code front end
               working-directory: ./client
               run: yarn generate
@@ -42,9 +42,9 @@ jobs:
             postgres:
                 image: postgres:12.0
                 env:
-                    POSTGRES_USER: todo
-                    POSTGRES_PASSWORD: todo-secret
-                    POSTGRES_DB: todo
+                    POSTGRES_USER: my_app
+                    POSTGRES_PASSWORD: my_app_secret
+                    POSTGRES_DB: my_app
                 ports:
                     # will assign a random free host port
                     - 5432/tcp
@@ -63,9 +63,9 @@ jobs:
             - name: Generate code
               working-directory: ./server
               run: yarn generate
-            - name: Setup database
+            - name: Run tests
               working-directory: ./server
-              run: yarn sync-db
+              run: yarn test
               env:
                   CI: true
                   DB_HOST: localhost

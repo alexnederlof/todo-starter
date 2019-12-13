@@ -1,8 +1,0 @@
-mutation CreateTodo($name: String!, $date: Date!) {
-	createTodo(name: $name, date: $date) {
-		id
-		name
-		complete
-		date
-	}
-}
