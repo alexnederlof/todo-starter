@@ -25,21 +25,28 @@ export default {
       if (!query?.length) {
         return await User.findAll({});
       } else {
-        const matcher = `%${query}%`;
-        return await User.findAll({
-          where: {
+        const matchers = query
+          .split(' ')
+          .filter(q => q.length > 0)
+          .map(q => `%${q.toLocaleLowerCase()}%`)
+          .map(q => ({
             [Op.or]: [
               {
                 name: {
-                  [Op.like]: matcher,
+                  [Op.iLike]: q,
                 },
               },
               {
                 email: {
-                  [Op.like]: matcher,
+                  [Op.iLike]: q,
                 },
               },
             ],
+          }));
+
+        return await User.findAll({
+          where: {
+            [Op.or]: matchers,
           },
         });
       }

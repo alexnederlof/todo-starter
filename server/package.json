@@ -4,19 +4,23 @@
   "main": "./src/index.ts",
   "private": true,
   "dependencies": {
-    "apollo-server": "^2.6.3",
+    "apollo-server": "^2.9.13",
     "commander": "^4.0.1",
     "graphql": "^14.3.1",
     "sequelize": "^5.8.10",
     "typescript": "3.7.2"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.2.1",
-    "@graphql-codegen/typescript": "^1.2.1",
-    "@graphql-codegen/typescript-resolvers": "^1.2.1",
+    "@graphql-codegen/cli": "^1.9.1",
+    "@graphql-codegen/typescript": "^1.9.1",
+    "@graphql-codegen/typescript-resolvers": "^1.9.1",
+    "@types/jest": "^24.0.23",
+    "apollo-server-testing": "^2.9.13",
     "concurrently": "^5.0.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.1",
     "pg": "^7.12.1",
+    "ts-jest": "^24.2.0",
     "ts-node": "^8.3.0"
   },
   "scripts": {
@@ -30,6 +34,7 @@
     "serve-debug": "nodemon --inspect ./build/index.js",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Generate,TypeScript,Node\" -c \"magenta.bold,green.bold,cyan.bold\" \"yarn generate --watch\" \"yarn watch-ts\" \"yarn serve-debug\"",
     "mysqldump-dev": "mysqldump todo -uroot --hex-blob --default-character-set=utf8mb4 >~/Desktop/todo-$(date +%F).sql",
-    "generate": "graphql-codegen --config codegen.yml"
+    "generate": "graphql-codegen --config codegen.yml",
+    "test": "jest --runInBand --forceExit"
   }
 }

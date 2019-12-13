@@ -1,9 +1,10 @@
-import { BuildOptions, DataTypes, Model, Sequelize } from 'sequelize';
+import { DataTypes, Model, Sequelize } from 'sequelize';
 import { Permission } from '../generated/graphql';
 
 export class User extends Model {
   public id!: number;
   public name!: string;
+  public email!: String;
   public avatar?: string;
   public deactivated!: boolean;
   public permissions!: Permission[];
