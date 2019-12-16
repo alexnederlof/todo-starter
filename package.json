@@ -11,8 +11,8 @@
     "pretty-quick": "^2.0.1"
   },
   "scripts": {
-    "check-codestyle": "prettier-check '**/*.{js,jsx,json,css,ts,tsx}'",
-    "fix-all-code-style": "prettier --write '**/*.{js,jsx,json,css,ts,tsx}'"
+    "check-codestyle": "prettier-check '**/*.{js,jsx,json,css,ts,tsx,md}'",
+    "fix-all-code-style": "prettier --write '**/*.{js,jsx,json,css,ts,tsx,md}'"
   },
   "husky": {
     "hooks": {
