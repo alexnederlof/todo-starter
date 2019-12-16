@@ -9,7 +9,7 @@ export function UserListContainer() {
 
   useEffect(() => {
     searchUsers({ variables: { query } });
-  }, [query, searchUsers, result.loading]);
+  }, [query]);
 
   return (
     <LoadingHandler result={result}>

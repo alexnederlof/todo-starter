@@ -8,12 +8,26 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import Header from './components/Header';
 import { Page } from './constants';
 import About from './containers/About';
+import { CallbackContainer } from './containers/auth/CallbackContainer';
 import CreateUserContainer from './containers/users/CreateUserContainer';
 import EditUserContainer from './containers/users/EditUserContainer';
 import { UserListContainer } from './containers/users/UserListContainer';
 
+const token = sessionStorage.getItem('auth_token');
+console.log('Token found, setting Auth header', token);
 export const client = new ApolloClient({
   uri: 'http://localhost:4000',
+  headers: {
+    Authorization: token ? `Bearer ${token}` : '',
+  },
+  onError: e => {
+    let loginUrl = e.graphQLErrors?.map(e => e.extensions?.login_url).find(x => x);
+
+    if (loginUrl) {
+      window.location.href = loginUrl;
+      return;
+    }
+  },
 });
 
 const useStyles = makeStyles(theme => ({
@@ -61,6 +75,7 @@ export default function App() {
                 <Route exact path="/users/new" component={CreateUserContainer} />
                 <Route exact path="/users/:id" component={EditUserContainer} />
                 <Route exact path="/users" component={UserListContainer} />
+                <Route exact path="/oauth/callback" component={CallbackContainer} />
                 <Route path={`/${Page.about}`} component={About} />
                 <Route exact path="/" component={() => <Redirect to="/users" />} />
               </Switch>

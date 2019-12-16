@@ -1,14 +1,25 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer, AuthenticationError } from 'apollo-server';
 import program from 'commander';
+import { config } from 'dotenv';
 import { delay } from 'q';
+import { TokenData, verify } from './auth/jwt';
+import { getLoginUrl } from './github';
 import resolvers from './resolvers';
 import typeDefs from './schema';
 import { sequelize } from './sequalize';
+
+if (process.env.NODE_ENV !== 'production') {
+  config();
+}
 
 program
   .option('-s, --sync-db', 'Sync database')
   .option('-f, --force', 'Force DB reste')
   .parse(process.argv);
+
+export interface AppContext {
+  token?: TokenData;
+}
 
 const run = async () => {
   if (program.syncDb) {
@@ -30,7 +41,30 @@ const run = async () => {
     // In the most basic sense, the ApolloServer can be started
     // by passing type definitions (typeDefs) and the resolvers
     // responsible for fetching the data for those types.
-    const server = new ApolloServer({ typeDefs, resolvers });
+    const server = new ApolloServer({
+      typeDefs,
+      resolvers,
+      context: ({ req }): AppContext => {
+        if (['AuthorizeWithGithub'].includes(req.body?.operationName)) {
+          return {};
+        }
+
+        let token = req.headers.authorization || '';
+        if (Array.isArray(token)) {
+          token = token[0];
+        }
+        try {
+          token = token.substring('Bearer '.length);
+          const result = verify(token);
+          return { token: result };
+        } catch (e) {
+          console.error('Got an invalid token', e);
+          const err = new AuthenticationError('Invalid token ' + e);
+          err.extensions['login_url'] = getLoginUrl();
+          throw err;
+        }
+      },
+    });
 
     while (true) {
       try {

@@ -18,6 +18,17 @@ query User($id: ID!) {
 	}
 }
 
+query Me {
+	me {
+		id
+		email
+		name
+		avatar
+		permissions
+		deactivated
+	}
+}
+
 mutation CreateUser($name: String!, $email: String!, $permissions: [Permission!]!) {
 	createUser(name: $name, email: $email, permissions: $permissions) {
 		id
