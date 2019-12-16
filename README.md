@@ -20,6 +20,13 @@ docker-compose up -d
 yarn sync-db
 ```
 
+### Authentication
+
+This sample app works with GitHub authentication. To use it, create
+a GitHub OAuth app [in your GitHub account](https://github.com/settings/developers), and add the client id and secret to
+the `server/.env` file, as demonstrated in the `server/.env.sample` file. Alternatively, you can pass it as environment
+properties as well.
+
 ## Run
 
 Create two bash terminals (terminal 1, terminal 2). `cd` into the root of the cloned repo in both.
