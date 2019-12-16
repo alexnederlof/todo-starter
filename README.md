@@ -16,6 +16,7 @@ Create database and sync (creating tables).
 
 ```bash
 cd server
+docker-compose up -d
 yarn sync-db
 ```
 
