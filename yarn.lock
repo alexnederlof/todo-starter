@@ -1181,7 +1181,7 @@
     "@graphql-toolkit/common" "0.7.4"
     tslib "1.10.0"
 
-"@graphql-codegen/typescript@1.8.3", "@graphql-codegen/typescript@^1.2.1":
+"@graphql-codegen/typescript@1.8.3":
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-1.8.3.tgz#600c2d7931f8a5433919dea5483adb9ba0aba65b"
   integrity sha512-Hw8b/iu/ZEAK22G3YmU//98jfmYN835ZPAx3w4c/reeMv4syfAoUlXrSKCbvfi/TOzVRzK/FjYKa0h5dKMoyPA==
