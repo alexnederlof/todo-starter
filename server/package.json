@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.9.1",
-    "@graphql-codegen/typescript": "^1.9.1",
+    "@graphql-codegen/typescript": "^1.12.0",
     "@graphql-codegen/typescript-resolvers": "^1.9.1",
     "@types/jest": "^24.0.23",
     "apollo-server-testing": "^2.9.13",
