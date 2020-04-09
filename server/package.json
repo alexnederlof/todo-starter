@@ -22,7 +22,7 @@
     "apollo-server-testing": "^2.9.13",
     "concurrently": "^5.0.0",
     "jest": "^24.9.0",
-    "nodemon": "^1.19.1",
+    "nodemon": "^2.0.3",
     "pg": "^7.12.1",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.3.0"
